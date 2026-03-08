@@ -768,7 +768,7 @@ body.elder .confirm-btn-ok,.elder .confirm-btn-cancel{padding:16px;font-size:cal
     </div>
   </div>
 </div>
-<div id="pg-settings-overlay" class="hide" style="position:fixed;inset:0;z-index:2000;background:var(--cr);overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,20px)"><div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--wm);background:var(--cd);position:sticky;top:0;z-index:1"><button onclick="closeSettings()" style="background:none;border:none;font-size:22px;cursor:pointer;padding:4px;color:var(--ac)">‹</button><div style="font-weight:700;font-size:calc(var(--fs)+2px)">設定</div></div>
+<div id="pg-settings-overlay" style="display:none" style="position:fixed;inset:0;z-index:2000;background:var(--cr);overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,20px)"><div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--wm);background:var(--cd);position:sticky;top:0;z-index:1"><button onclick="closeSettings()" style="background:none;border:none;font-size:22px;cursor:pointer;padding:4px;color:var(--ac)">‹</button><div style="font-weight:700;font-size:calc(var(--fs)+2px)">設定</div></div>
 <div id="pg-settings">
   <!-- Profile card at top (iPhone style) -->
   <div id="iset-profile-card" class="iset-profile-card" onclick="openEditProfile()">
@@ -2570,7 +2570,7 @@ function ocl(e){if(e.target===document.getElementById('modal'))closeModal();}
 function setPage(name,el){
   // Settings opens as overlay, not a tab
   if(name==='settings'){
-    document.getElementById('pg-settings-overlay').classList.remove('hide');
+    document.getElementById('pg-settings-overlay').style.display='block';
     document.getElementById('iset-name').textContent=myProfile?myProfile.name:'';
     document.getElementById('iset-email').textContent=currentUser?currentUser.email:'';
     document.getElementById('iset-avatar').textContent=myProfile?myProfile.emoji:'👤';
@@ -2593,7 +2593,7 @@ function setPage(name,el){
   if(tabMap[name])setTimeout(()=>showTabHint(tabMap[name]),400);
 }
 function closeSettings(){
-  document.getElementById('pg-settings-overlay').classList.add('hide');
+  document.getElementById('pg-settings-overlay').style.display='none';
 }
 function initSettingsPage(){
   // Profile card
