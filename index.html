@@ -22,16 +22,33 @@
   --sh:0 2px 16px rgba(78,52,37,.09);--r:16px;
   --fs:14px;--fi:20px
 }
-body.dark{--cr:#1A1210;--wm:#2A1F1A;--tx:#F0E8E0;--t2:#A89080;--t3:#6A5A50;--cd:#241810;--sh:0 2px 16px rgba(0,0,0,.4)}
-body.dark .hdr{background:#0F0B09}
-body.dark .bnav{background:#241810;border-color:#3A2820}
-body.dark .sheet{background:#2A1F1A}
-body.dark .fi,.dark select{background:#2A1F1A;color:var(--tx);border-color:#3A2820}
-body.fs-small{--fs:12px;--fi:17px}
-body.fs-mid{}
-body.fs-large{--fs:16px;--fi:22px}
-body.fs-xl{--fs:19px;--fi:28px}
-body.elder{--fs:19px;--fi:28px}
+body.dark{--cr:#221810;--wm:#352820;--tx:#F5EDE5;--t2:#C8A898;--t3:#8A7060;--cd:#2C1E16;--sh:0 2px 16px rgba(0,0,0,.35)}
+body.dark .hdr{background:#1A110A}
+body.dark .bnav{background:#2C1E16;border-color:#452E22}
+body.dark .sheet{background:#2C1E16}
+body.dark .fi,.dark select{background:#352820;color:var(--tx);border-color:#452E22}
+body.dark .card{background:#2C1E16;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+body.dark .iset-group{background:#2C1E16}
+body.dark .iset-row{border-color:#452E22}
+body.dark .sec-title{color:var(--t3)}
+body.dark .card-title{color:var(--tx)}
+body.dark .empty{color:var(--t3)}
+body.dark .li-txt{color:var(--tx)}
+body.dark .tag{background:var(--wm);color:var(--t2)}
+body.dark .btn-ghost{background:var(--wm);color:var(--t2)}
+body.dark .iset-row-title{color:var(--tx)}
+body.dark .iset-row-sub{color:var(--t2)}
+body.dark .tgl{background:var(--wm)}
+body.dark .gcal-cell{background:#2C1E16}
+body.dark .gcal-cell:hover{background:var(--wm)}
+body.dark .gcal-dh{background:#221810}
+body.dark .sc{background:#2C1E16}
+body.dark .sc-name{color:var(--tx)}
+body.fs-small{--fs:11px;--fi:15px;--fcard:11px;--fbtn:11px;--ftitle:13px;--fsub:10px}
+body.fs-mid{--fs:14px;--fi:20px;--fcard:13px;--fbtn:13px;--ftitle:15px;--fsub:11px}
+body.fs-large{--fs:16px;--fi:22px;--fcard:15px;--fbtn:15px;--ftitle:17px;--fsub:13px}
+body.fs-xl{--fs:19px;--fi:26px;--fcard:18px;--fbtn:17px;--ftitle:20px;--fsub:15px}
+body.elder{--fs:19px;--fi:26px;--fcard:18px;--fbtn:17px;--ftitle:20px;--fsub:15px}
 body.elder .btn{padding:10px 16px;font-size:16px}
 body.elder .card-title{font-size:18px}
 body.elder .ni-ic{font-size:26px}
@@ -93,7 +110,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
 .card-title{font-size:15px;font-weight:700}
 .sec-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.sec-title{font-size:10px;font-weight:700;color:var(--t3);letter-spacing:.1em}
+.sec-title{font-size:var(--fsub,10px);font-weight:700;color:var(--t3);letter-spacing:.1em}
 /* BUTTONS */
 .btn{border:none;border-radius:10px;padding:6px 12px;font-family:'Zen Maru Gothic',sans-serif;font-size:12px;cursor:pointer;font-weight:700;transition:all .13s;line-height:1.3}
 .btn:active{transform:scale(.93)}
@@ -344,7 +361,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .iset-row:active{opacity:.6}
 .iset-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;color:#fff}
 .iset-row-body{flex:1;min-width:0}
-.iset-row-title{font-size:14px;font-weight:600;color:var(--tx)}
+.iset-row-title{font-size:var(--fcard,14px);font-weight:600;color:var(--tx)}
 .iset-row-sub{font-size:11px;color:var(--t3);margin-top:2px}
 .iset-pick-row{display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid var(--wm);cursor:pointer;font-size:14px;transition:background .1s}
 .iset-pick-row:last-of-type{border-bottom:none}
@@ -763,7 +780,7 @@ const MOODS=['😄','😊','😐','😔','😤','🤒'];
 const DN=['日','月','火','水','木','金','土'];
 const COLS=['#D4663E','#5A9E7C','#6480B8','#E8A040','#8E6BB5','#C94040','#2196F3','#FF9800'];
 let db,auth,currentUser,myProfile;
-let members=[],state={status:{},mood:{},schedules:[],shopping:[],tasks:[],tomorrow:[],medicine:[],emergency:[]};
+let members=[],state={status:{},mood:{},schedules:[],shopping:[],tasks:[],tomorrow:[],medicine:[],emergency:[],meals:{}};
 let notifs={trash:false,sched:false,return:false,task:false,med:false},notifHist=[],curM=null;
 let calMode='month',calY,calM,calWeek,calDay,calFilter=[],profEmoji='🧑',editPE='',lastDate='';
 const p2=n=>String(n).padStart(2,'0');
@@ -780,7 +797,15 @@ function init(){
   catch(e){alert('Firebase error: '+e.message);return;}
   auth.onAuthStateChanged(u=>{
     if(u){currentUser=u;checkProfile(u);}
-    else{document.getElementById('loading').classList.add('hide');document.getElementById('login-screen').classList.remove('hide');}
+    else{
+      // Check for redirect result first (GitHub Pages)
+      auth.getRedirectResult().then(result=>{
+        if(result&&result.user){currentUser=result.user;checkProfile(result.user);}
+        else{document.getElementById('loading').classList.add('hide');document.getElementById('login-screen').classList.remove('hide');}
+      }).catch(()=>{
+        document.getElementById('loading').classList.add('hide');document.getElementById('login-screen').classList.remove('hide');
+      });
+    }
   });
   // Safety net: if still loading after 8s, show login screen
   setTimeout(()=>{
@@ -796,7 +821,12 @@ function signInGoogle(){
   ldtxt('ログイン中...');
   document.getElementById('login-screen').classList.add('hide');
   document.getElementById('loading').classList.remove('hide');
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{
+  const provider=new firebase.auth.GoogleAuthProvider();
+  // Use redirect on GitHub Pages to avoid COOP issues
+  auth.signInWithPopup(provider).catch(e=>{
+    if(e.code==='auth/popup-blocked'||e.code==='auth/popup-closed-by-user'||e.message.includes('Cross-Origin')){
+      auth.signInWithRedirect(provider);return;
+    }
     document.getElementById('loading').classList.add('hide');
     document.getElementById('login-screen').classList.remove('hide');
     alert('ログイン失敗: '+e.message);
@@ -807,7 +837,7 @@ async function checkProfile(u){
   isAdmin=(u.email===ADMIN_EMAIL);
   // Check global maintenance mode
   try{
-    const mDoc=await db.collection('iedash').doc('__meta__').get();
+    const mDoc=await db.collection('iedash').doc('_app_meta').get();
     if(mDoc.exists&&mDoc.data().maintenance&&!isAdmin){
       const msg=mDoc.data().maintenanceMsg||'ただいまメンテナンス中です。\nしばらくお待ちください。';
       document.getElementById('maint-msg').innerHTML=msg.replace(/\n/g,'<br>');
@@ -927,8 +957,9 @@ function saveMeals(mode){
   closeModal();renderMeal();
 }
 function showMealTodayEdit(){
-  const overrides=JSON.parse(localStorage.getItem('iedash_meal_overrides_'+ROOM)||'{}');
-  const tpl=JSON.parse(localStorage.getItem('iedash_meal_tpl_'+ROOM)||'{}');
+  const meals=state.meals||{};
+  const overrides={'__today':meals['override_'+tday()]||{}};
+  const tpl={'__dow':meals['tpl_'+new Date().getDay()]||{}};
   const today=tday(),dow=new Date().getDay();
   const d=overrides[today]||tpl[dow]||{};
   const mc=document.getElementById('mc');
@@ -954,7 +985,7 @@ function openMealTplEditor(){
     '<button class="btn btn-b btn-full" onclick="saveMeals(\'tpl\')">テンプレを保存</button>'+
     '<button class="btn btn-ghost btn-full" style="margin-top:6px" onclick="closeModal()">キャンセル</button>';
   document.getElementById('meal-tpl-dow').addEventListener('change',function(){
-    const tpl2=JSON.parse(localStorage.getItem('iedash_meal_tpl_'+ROOM)||'{}');
+    const tpl2_raw=state.meals||{};const tpl2={};for(let i=0;i<7;i++){const d=tpl2_raw['tpl_'+i];if(d)tpl2[i]=d;}
     document.getElementById('tpl-fields').innerHTML=renderTplFields(tpl2[parseInt(this.value)]||{});
   });
   openOv();
@@ -1097,6 +1128,7 @@ function listenAll(){
   db.collection('iedash').doc(ROOM).collection('tasks').onSnapshot(s=>{state.tasks=s.docs.map(d=>({id:d.id,...d.data()}));renderTasks();},console.error);
   db.collection('iedash').doc(ROOM).collection('tomorrow').onSnapshot(s=>{state.tomorrow=s.docs.map(d=>({id:d.id,...d.data()}));renderTmr();},console.error);
   db.collection('iedash').doc(ROOM).collection('medicine').onSnapshot(s=>{state.medicine=s.docs.map(d=>({id:d.id,...d.data()}));renderMed();},console.error);
+  db.collection('iedash').doc(ROOM).collection('meals').onSnapshot(s=>{state.meals={};s.docs.forEach(d=>{state.meals[d.id]=d.data();});renderMeal();},console.error);
   db.collection('iedash').doc(ROOM).collection('emergency').onSnapshot(s=>{const recent=s.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.createdAt&&(Date.now()-new Date(x.createdAt).getTime())<300000);if(recent.length>0)showEmergencyAlert(recent[recent.length-1]);},console.error);
 }
 function renderTabs(){
@@ -1275,11 +1307,14 @@ function renderMonthCal(){
   for(let d=1;d<=last.getDate();d++){
     const dt=new Date(calY,calM,d),dow=dt.getDay(),ds=calY+'-'+p2(calM+1)+'-'+p2(d),isT=dt.toDateString()===today.toDateString();
     const sc=filteredSch().filter(s=>s.date===ds),tr=getTrash(dt);
+    const trStr=tr.length?'<span style="font-size:9px;margin-left:2px;opacity:.8">'+tr.map(x=>x.emoji).join('')+'</span>':'';
     html+='<div class="gcal-cell'+(isT?' gcal-today':'')+(dow===0?' gcal-sun':dow===6?' gcal-sat':'')+'" onclick="jumpToDay('+calY+','+calM+','+d+')">'+
-      '<div class="gcal-dn'+(isT?' gcal-dn-today':'')+'">'+(isT?'<span>'+d+'</span>':d)+'</div>'+
-      (tr.length?'<div class="gcal-trash">'+tr.map(x=>x.emoji).join('')+'</div>':'')+
+      '<div style="display:flex;align-items:center;justify-content:center;margin-bottom:2px">'+
+        '<div class="gcal-dn'+(isT?' gcal-dn-today':'')+'">'+(isT?'<span>'+d+'</span>':d)+'</div>'+
+        trStr+
+      '</div>'+
       sc.slice(0,3).map(s=>'<div class="gcal-evt-pill" style="background:'+s.color+'20;color:'+s.color+';border-left:3px solid '+s.color+'">'+s.text.slice(0,8)+'</div>').join('')+
-      (sc.length>3?'<div class="gcal-more">+'+( sc.length-3)+'件</div>':'')+
+      (sc.length>3?'<div class="gcal-more">+'+(sc.length-3)+'件</div>':'')+
     '</div>';
   }
   html+='</div>';
@@ -2046,7 +2081,7 @@ function maintAdminLogin(){
 async function toggleMaintenance(on){
   const msg=on?prompt('メンテナンスメッセージを入力（空でデフォルト）:'):'';
   if(on&&msg===null)return;// cancelled
-  await db.collection('iedash').doc('__meta__').set({
+  await db.collection('iedash').doc('_app_meta').set({
     maintenance:on,
     maintenanceMsg:msg||'ただいまメンテナンス中です。\nしばらくお待ちください。',
     updatedAt:new Date().toISOString(),
