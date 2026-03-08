@@ -506,30 +506,6 @@ body.elder .med-today-name{font-size:calc(var(--fs) + 2px)}
 body.elder .confirm-title{font-size:calc(var(--fs) + 4px)}
 body.elder .confirm-btn-ok,.elder .confirm-btn-cancel{padding:16px;font-size:calc(var(--fs) + 2px)}
 
-
-/* ── bnav均等 ── */
-.bnav{justify-content:space-around!important}
-.ni{flex:1;min-width:0;max-width:80px}
-
-/* ── gcal-today 丸囲み ── */
-.gcal-today .gcal-dn-wrap{background:var(--ac);border-radius:50%;width:22px;height:22px}
-.gcal-today .gcal-dn{color:#fff!important;font-weight:800}
-
-/* ── su-btn (在宅/外出) ── */
-.su-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.su-btn{padding:11px 8px;border:2px solid var(--wm);border-radius:12px;background:var(--wm);font-family:'Zen Maru Gothic',sans-serif;font-size:var(--fs);font-weight:700;color:var(--t2);cursor:pointer;transition:all .15s;width:100%}
-.su-btn.hmon{border-color:var(--gn);background:rgba(74,140,106,.12);color:var(--gn)}
-.su-btn.outon{border-color:var(--ac);background:rgba(200,86,46,.1);color:var(--ac)}
-
-/* ── loc-row (位置情報) ── */
-.loc-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--wm)}
-.loc-row:last-child{border-bottom:none}
-.loc-name{font-size:var(--fs);font-weight:700;color:var(--tx)}
-.loc-place{font-size:11px;color:var(--t2);margin-top:2px}
-
-/* ── iset flat ── */
-.iset-icon{filter:saturate(.65)!important}
-
 </style>
 </head>
 <body>
@@ -680,7 +656,7 @@ body.elder .confirm-btn-ok,.elder .confirm-btn-cancel{padding:16px;font-size:cal
   <div class="sec" id="meal-sec">
     <div class="card">
       <div class="card-hdr" onclick="toggleCard('meal')" style="display:flex;align-items:center;justify-content:space-between"><div class="card-title">🍽️ 今日のごはん <span id="meal-badge"></span><span class="chev" id="chev-meal">›</span></div><button class="btn btn-ghost" style="font-size:10px" onclick="event.stopPropagation();openModal('mealSettings')">設定</button></div>
-      </div><div class="card-body" id="cbody-meal"><div id="mealDisp"></div>
+      </div><div class="card-body" id="cbody-meal"><div id="mealDisplay"></div>
     </div>
   </div>
 
@@ -836,8 +812,7 @@ body.elder .confirm-btn-ok,.elder .confirm-btn-cancel{padding:16px;font-size:cal
   <div class="ni" id="ni-todo" onclick="setPage('todo',this)"><div class="ni-ic">✅</div><div class="ni-lb">やること</div></div>
   <div class="ni" id="ni-calendar" onclick="setPage('calendar',this)"><div class="ni-ic">📅</div><div class="ni-lb">よてい</div></div>
   <div class="ni" id="ni-status" onclick="setPage('status',this)"><div class="ni-ic">🙋</div><div class="ni-lb">じぶん</div></div>
-
-
+</div>
 <div id="irori-confirm" class="hide">
   <div class="confirm-box">
     <div class="confirm-icon" id="confirm-icon">⚠️</div>
@@ -848,7 +823,6 @@ body.elder .confirm-btn-ok,.elder .confirm-btn-cancel{padding:16px;font-size:cal
       <button class="confirm-btn-ok" id="confirm-ok-btn" onclick="confirmOk()">OK</button>
     </div>
   </div>
-</div>
 </div>
 <div id="pg-settings-overlay" style="display:none;position:fixed;inset:0;z-index:2000;background:var(--cr);overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,20px)"><div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--wm);background:var(--cd);position:sticky;top:0;z-index:1"><button onclick="closeSettings()" style="background:none;border:none;font-size:22px;cursor:pointer;padding:4px;color:var(--ac)">‹</button><div style="font-weight:700;font-size:calc(var(--fs)+2px)">設定</div></div>
 <div id="pg-settings">
@@ -1293,7 +1267,7 @@ function boot(){
   calDay=new Date(now);lastDate=tday();
   updateDD();
   setInterval(()=>{const t=tday();if(t!==lastDate){lastDate=t;updateDD();renderTrash();}},60000);
-  syncMealTpl().then(()=>renderMeal());listenAll();renderTrash();renderBath();renderHomeSummary();renderHero();renderMedToday();schedChecks();renderNotifToggles();setTimeout(()=>initCollapse(),150);
+  syncMealTpl().then(()=>renderMeal());listenAll();renderTrash();initCollapse();renderHero();renderMedToday();schedChecks();renderNotifToggles();renderBath();renderHomeSummary();
   // Unregister all old service workers to prevent caching issues
   if('serviceWorker'in navigator){
     navigator.serviceWorker.getRegistrations().then(regs=>{
@@ -1453,29 +1427,21 @@ function togBath(key){
   if(!data[today])data[today]={washed:false,filled:false};
   data[today][key]=!data[today][key];
   localStorage.setItem('iedash_bath_'+ROOM,JSON.stringify(data));
-  if(ROOM&&db){const uid=currentUser?.uid||'anon';db.collection('iedash').doc(ROOM).collection('bath').doc(today).set({[key]:data[today][key],[key+'_uid']:uid,[key+'_name']:myProfile?.name||'',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).catch(console.error);}
   renderBath();
-  showToast('🛁 '+(key==='washed'?'洗いました':'入れました')+' '+(data[today][key]?'✅':'⬜'));
-  addAct('🛁 お風呂「'+(key==='washed'?'洗いました':'入れました')+'」'+(data[today][key]?'チェック':'解除'));
+  const label=key==='washed'?'洗いました':'入れました';
+  const state=data[today][key]?'✅':'⬜';
+  showToast('🛁 '+label+' '+state);
+  addAct('🛁 お風呂「'+label+'」'+(data[today][key]?'チェック':'解除'));
 }
 function listenAll(){
-  db.collection('iedash').doc(ROOM).collection('members').onSnapshot(s=>{members=s.docs.map(d=>d.data());renderTabs();renderSUPage();},console.error);
-  db.collection('iedash').doc(ROOM).collection('status').onSnapshot(s=>{state.status={};state.mood={};s.docs.forEach(d=>{const v=d.data();state.status[d.id]={home:v.home??false,ret:v.ret||''};if(v.mood)state.mood[d.id]=v.mood;});renderSUPage();},console.error);
+  db.collection('iedash').doc(ROOM).collection('members').onSnapshot(s=>{members=s.docs.map(d=>d.data());renderTabs();renderSG();renderSUPage();},console.error);
+  db.collection('iedash').doc(ROOM).collection('status').onSnapshot(s=>{state.status={};state.mood={};s.docs.forEach(d=>{const v=d.data();state.status[d.id]={home:v.home??false,ret:v.ret||''};if(v.mood)state.mood[d.id]=v.mood;});renderSG();renderSUPage();},console.error);
   db.collection('iedash').doc(ROOM).collection('schedules').onSnapshot(s=>{state.schedules=s.docs.map(d=>({id:d.id,...d.data()}));renderSch();if(document.getElementById('pg-calendar').classList.contains('active'))renderCal();},console.error);
   db.collection('iedash').doc(ROOM).collection('shopping').onSnapshot(s=>{state.shopping=s.docs.map(d=>({id:d.id,...d.data()}));renderShop();renderHomeSummary();},console.error);
   db.collection('iedash').doc(ROOM).collection('tasks').onSnapshot(s=>{state.tasks=s.docs.map(d=>({id:d.id,...d.data()}));renderTasks();},console.error);
   db.collection('iedash').doc(ROOM).collection('tomorrow').onSnapshot(s=>{state.tomorrow=s.docs.map(d=>({id:d.id,...d.data()}));renderTmr();},console.error);
   db.collection('iedash').doc(ROOM).collection('medicine').onSnapshot(s=>{state.medicine=s.docs.map(d=>({id:d.id,...d.data()}));renderMed();renderMedToday();},console.error);
   db.collection('iedash').doc(ROOM).collection('meals').onSnapshot(s=>{state.meals={};s.docs.forEach(d=>{state.meals[d.id]=d.data();});renderMeal();},console.error);
-  db.collection('iedash').doc(ROOM).collection('bath').doc(tday()).onSnapshot(d=>{
-    if(d.exists){const bd=JSON.parse(localStorage.getItem('iedash_bath_'+ROOM)||'{}');bd[tday()]=Object.assign(bd[tday()]||{},d.data());localStorage.setItem('iedash_bath_'+ROOM,JSON.stringify(bd));renderBath();}
-  },console.error);
-  db.collection('iedash').doc(ROOM).collection('settings').doc('trash_area').onSnapshot(d=>{
-    if(d.exists){const{area,label}=d.data();localStorage.setItem('iedash_trash_area',area);renderTrash();const lbl=document.getElementById('iset-trash-area-lbl');if(lbl)lbl.textContent=label||area;}
-  },console.error);
-  db.collection('iedash').doc(ROOM).collection('status_events').orderBy('ts','desc').limit(30).onSnapshot(s=>{
-    renderNhistStatus(s.docs.map(d=>({id:d.id,...d.data()})));
-  },console.error);
   db.collection('iedash').doc(ROOM).collection('emergency').onSnapshot(s=>{const recent=s.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.createdAt&&(Date.now()-new Date(x.createdAt).getTime())<300000);if(recent.length>0)showEmergencyAlert(recent[recent.length-1]);},console.error);
 }
 function renderTabs(){
@@ -1531,7 +1497,7 @@ function renderSch(){
     '</div>';
   }).join('');
 }
-async function delSch(id){const s=state.schedules.find(x=>x.id===id);if(!s||!canEdit(s.ownerUid))return;const ok=await iroriConfirm({icon:'📅',title:'予定を削除',msg:s.text+'を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('schedules').doc(id).delete().catch(console.error);}
+function delSch(id){const s=state.schedules.find(x=>x.id===id);if(!s||!canEdit(s.ownerUid))return;if(!confirm('削除しますか？'))return;db.collection('iedash').doc(ROOM).collection('schedules').doc(id).delete().catch(console.error);}
 function getTrash(d){
   const area=localStorage.getItem('iedash_trash_area')||'箕面市A-4地区';
   const w=d.getDay(),t=[],n=Math.ceil(d.getDate()/7);
@@ -1667,7 +1633,7 @@ function showEmergencyAlert(e){
   document.body.appendChild(d);
 }
 // ─── CALENDAR ───
-function setCalMode(m){calMode=m;['month','week','day'].forEach(v=>{const btn=document.getElementById('ct-'+v)||document.getElementById('cvt-'+v);if(btn)btn.classList.toggle('active',v===m)});renderCal();}
+function setCalMode(m){calMode=m;['month','week','day'].forEach(v=>document.getElementById('cvt-'+v).classList.toggle('active',v===m));renderCal();}
 function calDelta(d){
   if(calMode==='month'){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}}
   else if(calMode==='week'){calWeek=new Date(calWeek);calWeek.setDate(calWeek.getDate()+d*7);}
@@ -1830,17 +1796,37 @@ function setSt(home){
   db.collection('iedash').doc(ROOM).collection('status').doc(u)
     .set({home,ret:c.ret||''},{merge:true})
     .then(()=>{
-      const emoji=myProfile?.emoji||'👤';
-      const msg=emoji+' '+myProfile.name+'さんが'+(home?'帰宅しました':'外出しました');
-      addAct(msg);showToast(msg);
-      db.collection('iedash').doc(ROOM).collection('status_events').add({uid:u,name:myProfile.name,emoji,action:home?'home':'out',ts:Date.now()}).catch(()=>{});
-      if(!home){
-        shareLocation();
-        if(window._locInterval)clearInterval(window._locInterval);
-        window._locInterval=setInterval(()=>{if(state.status[u]?.home===false)shareLocation();else{clearInterval(window._locInterval);window._locInterval=null;}},300000);
-      } else {
-        if(window._locInterval){clearInterval(window._locInterval);window._locInterval=null;}
-        clearMyLocation();
+      const emoji=home?'🏠':'🚶';
+      const action=home?'が帰宅しました':'が外出しました';
+      const msg=emoji+' '+myProfile.name+action;
+      addAct(msg);
+      showToast(msg);
+      // Write status_events for family notification
+      db.collection('iedash').doc(ROOM).collection('status_events').add({
+        uid:u,name:myProfile.name,emoji:myProfile.emoji,
+        action:home?'home':'out',ts:Date.now(),
+        text:msg
+      }).catch(()=>{});
+      // Get location silently
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(pos=>{
+          const{latitude:lat,longitude:lng}=pos.coords;
+          fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json&accept-language=ja')
+            .then(r=>r.json()).then(j=>{
+              const area=j.address?.neighbourhood||j.address?.suburb||j.address?.city_district||j.address?.city||'';
+              const place=(j.address?.road||'')+(area?' '+area:'');
+              db.collection('iedash').doc(ROOM).collection('locations').doc(u)
+                .set({uid:u,lat,lng,place,ts:Date.now(),status:home?'home':'out'});
+              // Push notification to self (other family members see via Firestore listener)
+              if(Notification.permission==='granted')
+                new Notification(msg,{body:place||''});
+            }).catch(()=>{
+              db.collection('iedash').doc(ROOM).collection('locations').doc(u)
+                .set({uid:u,lat,lng,place:'',ts:Date.now(),status:home?'home':'out'});
+            });
+        },()=>{});
+      } else if(Notification.permission==='granted'){
+        new Notification(msg,{body:''});
       }
     }).catch(console.error);
 }
@@ -1896,7 +1882,7 @@ function getMealForToday(){
   return{data:{},source:'none'};
 }
 function renderMeal(){
-  const el=document.getElementById('mealDisp');if(!el)return;
+  const el=document.getElementById('mealDisplay');if(!el)return;
   const {data,source,dow}=getMealForToday();
   const hasAny=Object.values(data).some(v=>v);
   let badge='';
@@ -2243,23 +2229,25 @@ function listenLocations(){
 }
 function renderLocations(locs){
   const el=document.getElementById('locList');if(!el)return;
-  const shareBtn='<button class="btn btn-ac btn-full" style="margin-bottom:10px" onclick="shareLocation()">📍 自分の位置を共有する</button>';
-  const rows=Object.entries(locs||{}).filter(([,loc])=>loc&&loc.lat);
-  if(!rows.length){el.innerHTML=shareBtn+'<div class="empty">まだ誰も共有していません</div>';return;}
-  el.innerHTML=shareBtn+rows.map(([uid,loc])=>{
-    const m=gm(uid);
+  const rows=state.members.map(m=>({m,loc:locs[m.uid]})).filter(x=>x.loc&&x.loc.lat);
+  if(!rows.length){el.innerHTML='<div class="empty">まだ誰も共有していません</div>';return;}
+  el.innerHTML=rows.map(({m,loc})=>{
     const mapsUrl='https://www.google.com/maps?q='+loc.lat+','+loc.lng;
     const ago=Math.round((Date.now()-loc.ts)/60000);
     const agoTxt=ago<1?'たった今':ago<60?ago+'分前':Math.round(ago/60)+'時間前';
-    const mine=isMe(uid);
-    return '<div class="loc-row">'
-      +'<div style="font-size:26px;width:34px;text-align:center">'+m.emoji+'</div>'
-      +'<div style="flex:1;min-width:0"><div class="loc-name">'+m.name+'</div>'
-      +'<div class="loc-place">'+(loc.place||'📍 位置共有中')+'</div>'
-      +'<div style="font-size:10px;color:var(--t3)">'+agoTxt+' • '+(loc.status==='home'?'🏠 帰宅':'🚶 外出中')+'</div></div>'
-      +'<a href="'+mapsUrl+'" target="_blank" style="text-decoration:none"><button class="btn btn-b" style="font-size:11px;flex-shrink:0">地図</button></a>'
-      +(mine?'<button class="btn btn-ghost" style="font-size:10px;margin-left:4px;flex-shrink:0" onclick="clearMyLocation()">消去</button>':'')
-      +'</div>';
+    const mine=isMe(m.uid);
+    return'<div class="loc-row">'+
+      '<div style="font-size:26px;width:34px;text-align:center">'+m.emoji+'</div>'+
+      '<div style="flex:1">'+
+        '<div class="loc-name">'+m.name+'</div>'+
+        '<div class="loc-place">'+(loc.place||'📍 位置共有中')+'</div>'+
+        '<div style="font-size:10px;color:var(--t3)">'+agoTxt+' • '+(loc.status==='home'?'🏠 帰宅':'🚶 外出中')+'</div>'+
+      '</div>'+
+      '<a href="'+mapsUrl+'" target="_blank" style="text-decoration:none">'+
+        '<button class="btn btn-b" style="font-size:11px">地図</button>'+
+      '</a>'+
+      (mine?'<button class="btn btn-ghost" style="font-size:10px;margin-left:4px" onclick="clearMyLocation()">消去</button>':'')+
+    '</div>';
   }).join('');
 }
 function clearMyLocation(){
@@ -2320,7 +2308,7 @@ let icalFeeds=[];
 function loadIcalFeeds(){
   try{icalFeeds=JSON.parse(localStorage.getItem('iedash_ical')||'[]');}catch{icalFeeds=[];}
 }
-function saveIcalFeeds(){localStorage.setItem('iedash_ical',JSON.stringify(icalFeeds));if(ROOM&&db)db.collection('iedash').doc(ROOM).collection('settings').doc('ical_feeds').set({feeds:icalFeeds,updatedAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(console.error);}
+function saveIcalFeeds(){localStorage.setItem('iedash_ical',JSON.stringify(icalFeeds));}
 function addIcalFeed(){
   const name=document.getElementById('ical-name').value.trim();
   const url=document.getElementById('ical-url').value.trim();
@@ -2575,7 +2563,7 @@ function applySettings(){
   if(localStorage.getItem('iedash_dark')==='1')document.body.classList.add('dark');
   if(localStorage.getItem('iedash_elder')==='1')document.body.classList.add('elder');
 }
-async function doSignOut(){const ok=await iroriConfirm({icon:'🚪',title:'ログアウト',msg:'ログアウトしますか？',okLabel:'ログアウト',okColor:'#5C3D2E'});if(ok)auth.signOut().catch(console.error);}
+function doSignOut(){if(confirm('ログアウトしますか？'))auth.signOut().catch(console.error);}
 function openOv(){document.getElementById('modal').classList.add('open');}
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 function ocl(e){if(e.target===document.getElementById('modal'))closeModal();}
@@ -2672,10 +2660,13 @@ function openTrashAreaPicker(){
 }
 function setTrashArea(id,label){
   localStorage.setItem('iedash_trash_area',id);
-  if(ROOM&&db)db.collection('iedash').doc(ROOM).collection('settings').doc('trash_area').set({area:id,label,updatedAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(console.error);
-  const lbl=document.getElementById('iset-trash-area-lbl');if(lbl)lbl.textContent=label;
-  const hdr=document.getElementById('trash-area-lbl');if(hdr)hdr.textContent='🗑️ ゴミ出し（'+label+'）';
-  renderTrash();closeModal();showToast('地域を「'+label+'」に設定しました');
+  const lbl=document.getElementById('iset-trash-area-lbl');
+  if(lbl)lbl.textContent=label;
+  const hdr=document.getElementById('trash-area-lbl');
+  if(hdr)hdr.textContent='🗑️ ゴミ出し（'+label+'）';
+  renderTrash();
+  closeModal();
+  showToast('地域を更新しました');
 }
 
 
@@ -2686,13 +2677,12 @@ function toggleCard(id){
   applyCollapse(id);
 }
 function applyCollapse(id){
-  const body=document.getElementById('cbody-'+id)||document.getElementById('body-'+id);
-  const arr=document.getElementById('chev-'+id)||document.getElementById('arr-'+id);
+  const body=document.getElementById('cbody-'+id);
+  const chev=document.getElementById('chev-'+id);
   if(!body)return;
-  const collapsed=!!collapsedCards[id];
-  if(collapsed){body.style.maxHeight='0';body.classList.add('collapsed');}
-  else{body.style.maxHeight='none';body.classList.remove('collapsed');}
-  if(arr)arr.style.transform=collapsed?'rotate(0deg)':'rotate(180deg)';
+  const collapsed=collapsedCards[id];
+  body.classList.toggle('collapsed',!!collapsed);
+  if(chev)chev.style.transform=collapsed?'rotate(0deg)':'rotate(90deg)';
 }
 function initCollapse(){
   ['meal','shop','task','bath','med','trash','sch'].forEach(id=>applyCollapse(id));
@@ -2813,43 +2803,4 @@ function checkTrashBanner(){
 // setPageにhint表示を追加
 
 applySettings();init();
-
-function shareLocation(){
-  if(!navigator.geolocation){showToast('位置情報が使えません');return;}
-  showToast('📍 位置情報を取得中...');
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const{latitude:lat,longitude:lng}=pos.coords;
-    const u=currentUser?.uid;if(!u)return;
-    fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json&accept-language=ja')
-      .then(r=>r.json()).then(j=>{
-        const area=j.address?.neighbourhood||j.address?.suburb||j.address?.city_district||j.address?.city||'';
-        const place=(j.address?.road||'')+(area?' '+area:'');
-        db.collection('iedash').doc(ROOM).collection('locations').doc(u).set({uid:u,lat,lng,place,ts:Date.now(),status:(state.status[u]?.home?'home':'out')}).then(()=>showToast('📍 位置を共有しました')).catch(console.error);
-      }).catch(()=>{db.collection('iedash').doc(ROOM).collection('locations').doc(u).set({uid:u,lat,lng,place:'',ts:Date.now(),status:'out'}).catch(console.error);});
-  },()=>showToast('位置情報の取得に失敗しました'));
-}
-function openSettings(){
-  const ov=document.getElementById('settings-overlay');if(ov)ov.classList.add('open');
-  if(typeof renderMemberSettings==='function')renderMemberSettings();
-  const lbl=document.getElementById('iset-trash-area-lbl');
-  if(lbl){const area=localStorage.getItem('iedash_trash_area');lbl.textContent=area||'未設定';}
-}
-function renderMemberSettings(){
-  const el=document.getElementById('member-list-settings');if(!el)return;
-  if(!members.length){el.innerHTML='<div style="padding:12px 16px;color:var(--t3);font-size:13px">メンバーがいません</div>';return;}
-  el.innerHTML=members.map(m=>{
-    const mine=m.uid===currentUser?.uid;
-    return '<div class="iset-row" style="border:none"><div style="font-size:24px;width:34px;text-align:center">'+m.emoji+'</div>'
-      +'<div class="iset-row-body"><div class="iset-row-title">'+m.name+(mine?' <span style="font-size:10px;background:var(--yl);color:var(--br);padding:1px 5px;border-radius:4px">自分</span>':'')+'</div>'
-      +'<div class="iset-row-sub">'+(m.email||'')+'</div></div>'
-      +(isAdmin&&!mine?'<button onclick="removeMember('+JSON.stringify(m.uid)+')" style="background:none;border:none;color:var(--rd);font-size:12px;cursor:pointer;padding:4px 8px;font-weight:700">削除</button>':'')
-      +'</div>';
-  }).join('');
-}
-async function removeMember(uid){
-  const m=gm(uid);
-  const ok=await iroriConfirm({icon:'👤',title:'メンバー削除',msg:m.name+'をルームから削除しますか？',okLabel:'削除する',okColor:'#C94040'});
-  if(!ok)return;
-  db.collection('iedash').doc(ROOM).collection('members').doc(uid).delete().then(()=>showToast(m.name+'を削除しました')).catch(console.error);
-}
 </script></body></html>
