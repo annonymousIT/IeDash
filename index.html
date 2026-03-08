@@ -2581,7 +2581,7 @@ function setPage(name,el){
     initSettingsPage();
     return;
   }
-  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.scroll .pg').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   const pg=document.getElementById('pg-'+name);
   if(pg)pg.classList.add('active');
@@ -2630,11 +2630,6 @@ function initSettingsPage(){
   if(adminSec)adminSec.style.display=isAdmin?'block':'none';
   // Feedback count for admin
   if(isAdmin)loadFbCount();
-  // Onboarding
-  setTimeout(()=>{
-    runFirstRoomTut();
-    checkTrashBanner();
-  }, 800);
 }
 function openEditProfile(){openModal('editProfile');}
 function showRoomInvite(){
