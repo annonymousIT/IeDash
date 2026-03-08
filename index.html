@@ -419,6 +419,20 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .fs-btn2{padding:10px 4px;border-radius:10px;border:2px solid var(--wm);background:var(--cd);font-family:'Zen Maru Gothic',sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--t2);transition:all .13s}
 .fs-btn2.active{background:var(--ac);color:#fff;border-color:var(--ac)}
 
+
+/* FAB - Floating Action Button */
+#fab-wrap{position:fixed;bottom:80px;right:16px;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#fab-main{width:56px;height:56px;border-radius:50%;background:var(--ac);border:none;font-size:26px;color:#fff;cursor:pointer;box-shadow:0 4px 20px rgba(212,102,62,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
+#fab-main:active{transform:scale(.93)}
+#fab-main.open{transform:rotate(45deg);background:#8A8A8A}
+.fab-items{display:flex;flex-direction:column;align-items:flex-end;gap:8px;transition:all .2s}
+.fab-items.hide{display:none}
+.fab-item{display:flex;align-items:center;gap:10px;animation:fabIn .15s ease both}
+@keyframes fabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fab-item-btn{width:46px;height:46px;border-radius:50%;border:none;font-size:20px;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.fab-item-btn:active{transform:scale(.9)}
+.fab-item-lbl{background:var(--cd);color:var(--tx);font-family:'Zen Maru Gothic',sans-serif;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap}
+
 </style>
 </head>
 <body>
@@ -543,6 +557,12 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
       <div id="locList"><div class="empty">まだ誰も共有していません</div></div>
     </div>
   </div>
+  <div class="sec">
+    <div class="tmr">
+      <div class="tmr-hdr"><div class="tmr-title">🌙 明日の予定</div><button class="btn" onclick="openModal('tomorrow')" style="background:rgba(255,255,255,.15);color:#fff;font-size:11px">＋ 入力</button></div>
+      <div id="tmrList"></div>
+    </div>
+  </div>
   <div class="sec" id="meal-sec">
     <div class="card">
       <div class="card-hdr"><div class="card-title">🍽️ 今日のごはん <span id="meal-badge"></span></div><button class="btn btn-ghost" style="font-size:10px" onclick="openModal('mealSettings')">設定</button></div>
@@ -581,12 +601,6 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
     <div class="card">
       <div class="card-hdr"><div class="card-title" id="schTitle">今日のスケジュール</div><button class="btn btn-o" onclick="openModal('schedule')">＋ 追加</button></div>
       <div id="schList"></div>
-    </div>
-  </div>
-  <div class="sec">
-    <div class="tmr">
-      <div class="tmr-hdr"><div class="tmr-title">🌙 明日の予定</div><button class="btn" onclick="openModal('tomorrow')" style="background:rgba(255,255,255,.15);color:#fff;font-size:11px">＋ 入力</button></div>
-      <div id="tmrList"></div>
     </div>
   </div>
 </div>
@@ -780,6 +794,31 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
     <div style="text-align:center;font-size:10px;color:var(--t3);margin-top:12px">Irori v1.0 · 開発：一色翔</div>
   </div>
 </div>
+</div>
+<div id="fab-wrap">
+  <div class="fab-items hide" id="fab-items">
+    <div class="fab-item" style="animation-delay:.05s">
+      <div class="fab-item-lbl">明日の予定</div>
+      <button class="fab-item-btn" style="background:#4E3425;color:#fff" onclick="fabAction('tomorrow')">🌙</button>
+    </div>
+    <div class="fab-item" style="animation-delay:.04s">
+      <div class="fab-item-lbl">お薬</div>
+      <button class="fab-item-btn" style="background:#F3E8FF;color:#8E6BB5" onclick="fabAction('medicine')">💊</button>
+    </div>
+    <div class="fab-item" style="animation-delay:.03s">
+      <div class="fab-item-lbl">タスク</div>
+      <button class="fab-item-btn" style="background:#EBF4FF;color:#6480B8" onclick="fabAction('task')">✅</button>
+    </div>
+    <div class="fab-item" style="animation-delay:.02s">
+      <div class="fab-item-lbl">買い物</div>
+      <button class="fab-item-btn" style="background:#E8F5EE;color:#5A9E7C" onclick="fabAction('shop')">🛒</button>
+    </div>
+    <div class="fab-item" style="animation-delay:.01s">
+      <div class="fab-item-lbl">予定</div>
+      <button class="fab-item-btn" style="background:#FFF0E8;color:#D4663E" onclick="fabAction('schedule')">📅</button>
+    </div>
+  </div>
+  <button id="fab-main" onclick="toggleFab()">＋</button>
 </div>
 <div class="bnav">
   <div class="ni active" id="ni-home" onclick="setPage('home',this)"><div class="ni-ic">🏠</div><div class="ni-lb">ホーム</div></div>
@@ -2342,5 +2381,32 @@ function setTrashArea(id,label){
   closeModal();
   showToast('地域を更新しました');
 }
+
+let fabOpen=false;
+function toggleFab(){
+  fabOpen=!fabOpen;
+  document.getElementById('fab-items').classList.toggle('hide',!fabOpen);
+  document.getElementById('fab-main').classList.toggle('open',fabOpen);
+  // Add backdrop click to close
+  if(fabOpen){
+    setTimeout(()=>document.addEventListener('click',closeFabOutside),10);
+  }
+}
+function closeFabOutside(e){
+  if(!document.getElementById('fab-wrap').contains(e.target)){
+    closeFab();
+  }
+}
+function closeFab(){
+  fabOpen=false;
+  document.getElementById('fab-items').classList.add('hide');
+  document.getElementById('fab-main').classList.remove('open');
+  document.removeEventListener('click',closeFabOutside);
+}
+function fabAction(type){
+  closeFab();
+  openModal(type);
+}
+
 applySettings();init();
 </script></body></html>
