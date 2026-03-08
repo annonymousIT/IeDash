@@ -26,7 +26,7 @@ body.dark{--cr:#1C1209;--wm:#2E2018;--tx:#F0E6DC;--t2:#D4B8A8;--t3:#A08878;--cd:
 body.dark .hdr{background:#1A110A}
 body.dark .bnav{background:#2C1E16;border-color:#452E22}
 body.dark .sheet{background:#2C1E16}
-body.dark .fi,.dark select{background:#352820;color:var(--tx);border-color:#452E22}
+body.dark .fi,.dark select{background:#352820;color:var(--tx);border-color:#452E22;font-size:calc(var(--fs)+1px)}
 body.dark .card{background:#2C1E16;box-shadow:0 2px 12px rgba(0,0,0,.3)}
 body.dark .iset-group{background:#2C1E16}
 body.dark .iset-row{border-color:#452E22}
@@ -255,12 +255,12 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .18s}
 .overlay.open{opacity:1;pointer-events:all}
-.sheet{background:#fff;width:100%;border-radius:22px 22px 0 0;padding:16px 16px 30px;transform:translateY(100%);transition:transform .25s cubic-bezier(.34,1.4,.64,1);max-height:90vh;overflow-y:auto}
+.sheet{background:#fff;width:100%;border-radius:22px 22px 0 0;padding:20px 18px 34px;transform:translateY(100%);transition:transform .25s cubic-bezier(.34,1.4,.64,1);max-height:92vh;overflow-y:auto}
 .overlay.open .sheet{transform:translateY(0)}
 .handle{width:36px;height:4px;background:var(--wm);border-radius:2px;margin:0 auto 14px}
-.m-title{font-size:16px;font-weight:700;margin-bottom:12px}
-.fg{margin-bottom:11px}.fl{font-size:11px;color:var(--t2);margin-bottom:4px;display:block;font-weight:700;letter-spacing:.04em}
-.fi{width:100%;padding:11px 13px;border:2px solid var(--wm);border-radius:12px;font-family:'Zen Maru Gothic',sans-serif;font-size:var(--fs);outline:none;transition:border-color .14s;background:#fff;color:var(--tx)}.fi:focus{border-color:var(--ac)}
+.m-title{font-size:calc(var(--fs) + 4px);font-weight:700;margin-bottom:14px}
+.fg{margin-bottom:13px}.fl{font-size:calc(var(--fs) - 1px);color:var(--t2);margin-bottom:5px;display:block;font-weight:700;letter-spacing:.04em}
+.fi{width:100%;padding:13px 14px;border:2px solid var(--wm);border-radius:12px;font-family:'Zen Maru Gothic',sans-serif;font-size:calc(var(--fs) + 1px);outline:none;transition:border-color .14s;background:#fff;color:var(--tx)}.fi:focus{border-color:var(--ac)}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .eg{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
 .eo{font-size:24px;text-align:center;padding:7px;border-radius:9px;cursor:pointer;border:2px solid transparent;transition:all .12s}.eo.sel,.eo:hover{background:var(--wm);border-color:var(--ac)}
@@ -1007,10 +1007,13 @@ function saveRoomToHistory(id,name){
   localStorage.setItem(key,JSON.stringify(rooms));
 }
 function saveMeals(mode){
-  const b=document.getElementById('meal-b').value.trim();
-  const l=document.getElementById('meal-l').value.trim();
-  const d2=document.getElementById('meal-d').value.trim();
-  const entry={breakfast:b,lunch:l,dinner:d2};
+  const b=document.getElementById('meal-b')?document.getElementById('meal-b').value.trim():'';
+  const l=document.getElementById('meal-l')?document.getElementById('meal-l').value.trim():'';
+  const d2=document.getElementById('meal-d')?document.getElementById('meal-d').value.trim():'';
+  const bt=document.getElementById('meal-bt')?document.getElementById('meal-bt').value:'';
+  const lt=document.getElementById('meal-lt')?document.getElementById('meal-lt').value:'';
+  const dt=document.getElementById('meal-dt')?document.getElementById('meal-dt').value:'';
+  const entry={breakfast:b,lunch:l,dinner:d2,breakfast_time:bt,lunch_time:lt,dinner_time:dt};
   if(mode==='today'){
     const overrides=JSON.parse(localStorage.getItem('iedash_meal_overrides_'+ROOM)||'{}');
     overrides[tday()]=entry;
@@ -1034,7 +1037,7 @@ function showMealTodayEdit(){
   const mc=document.getElementById('mc');
   mc.innerHTML='<div class="m-title">📝 今日のごはんを編集</div>'+
     '<div style="font-size:12px;color:var(--t2);margin-bottom:12px">今日だけの内容を入力。曜日テンプレは変わりません。</div>'+
-    MEAL_SLOTS.map(sl=>'<div class="fg"><label class="fl">'+sl.label+'</label><input class="fi" id="meal-'+sl.key.slice(0,1)+'" value="'+(d[sl.key]||'')+'" placeholder="'+sl.placeholder+'"></div>').join('')+
+    MEAL_SLOTS.map(sl=>'<div class="fg"><label class="fl">'+sl.label+'</label><div style="display:flex;gap:8px"><input type="time" class="fi" id="meal-'+sl.key.slice(0,1)+'t" value="'+(d[sl.timeKey]||'')+'" style="width:110px;flex-shrink:0"><input class="fi" id="meal-'+sl.key.slice(0,1)+'" value="'+(d[sl.key]||'')+'" placeholder="'+sl.placeholder+'"></div></div>').join('')+
     '<button class="btn btn-o btn-full" onclick="saveMeals(\'today\')">今日だけ保存</button>'+
     '<button class="btn btn-ghost btn-full" style="margin-top:6px" onclick="openModal(\'mealSettings\')">戻る</button>';
   // don't call openOv again - already open
@@ -1062,7 +1065,10 @@ function openMealTplEditor(){
 function renderTplFields(d){
   return MEAL_SLOTS.map(sl=>
     '<div class="fg"><label class="fl">'+sl.label+'</label>'+
-    '<input class="fi" id="meal-'+sl.key.slice(0,1)+'" value="'+(d[sl.key]||'')+'" placeholder="'+sl.placeholder+'"></div>'
+    '<div style="display:flex;gap:8px">'+
+    '<input type="time" class="fi" id="meal-'+sl.key.slice(0,1)+'t" value="'+(d[sl.timeKey]||'')+'" style="width:110px;flex-shrink:0">'+
+    '<input class="fi" id="meal-'+sl.key.slice(0,1)+'" value="'+(d[sl.key]||'')+'" placeholder="'+sl.placeholder+'">'+
+    '</div></div>'
   ).join('');
 }
 function cpCode(code){navigator.clipboard.writeText(code).then(()=>showToast('コピーしました！'));}
@@ -1598,9 +1604,9 @@ function openPrivacy(){
 }
 // Meal helpers
 const MEAL_SLOTS=[
-  {key:'breakfast',label:'🌅 朝',placeholder:'トースト、おにぎり...'},
-  {key:'lunch',label:'☀️ 昼',placeholder:'カレー、パスタ...'},
-  {key:'dinner',label:'🌙 夜',placeholder:'鍋、炒め物...'},
+  {key:'breakfast',label:'🌅 朝ごはん',timeKey:'breakfast_time',placeholder:'料理名（例：トースト）'},
+  {key:'lunch',label:'☀️ 昼ごはん',timeKey:'lunch_time',placeholder:'料理名（例：カレー）'},
+  {key:'dinner',label:'🌙 夜ごはん',timeKey:'dinner_time',placeholder:'料理名（例：鍋）'},
 ];
 const DN7=['日','月','火','水','木','金','土'];
 // Meal sync: templates stored in Firestore, today overrides in localStorage
