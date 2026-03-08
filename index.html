@@ -49,6 +49,14 @@ body.dark{
   --sh2:0 4px 24px rgba(0,0,0,.5);
 }
 body.dark .hdr{background:rgba(26,17,10,.95)}
+body.dark .bnav{
+  background:var(--cd);
+  display:flex;
+  border-top:1px solid var(--wm);
+  padding:6px 0 env(safe-area-inset-bottom,12px);
+  flex-shrink:0;
+  box-shadow:0 -1px 0 rgba(61,43,31,.06);
+}
 body.dark .bnav{background:#1A110A;border-color:#3A2518}
 
 /* Font sizes */
@@ -825,6 +833,67 @@ body.dark .fi{background:var(--wm)}
   .modal-box,.tut-card{border-radius:24px;margin:auto;max-height:80vh}
   .overlay{align-items:center}
 }
+
+/* Bath check buttons (used by renderBath JS) */
+.bath-chk{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 8px;border:2px solid var(--wm);border-radius:14px;
+  background:var(--wm);color:var(--t2);
+  font-family:'Zen Maru Gothic',sans-serif;font-size:var(--fs);
+  font-weight:700;cursor:pointer;transition:all .15s;width:100%;
+}
+.bath-chk-on{border-color:currentColor}
+.bath-blue{color:var(--bl);background:rgba(82,112,168,.1)}
+.bath-green{color:var(--gn);background:rgba(74,140,106,.1)}
+
+
+/* ── Schedule items (si) ── */
+.si{display:flex;align-items:flex-start;gap:8px;padding:9px 2px;border-bottom:1px solid var(--wm);cursor:pointer}
+.si:last-child{border-bottom:none}
+.si:active{background:var(--wm);border-radius:8px;margin:0 -4px;padding:9px 6px}
+.si-time{font-size:11px;font-weight:700;color:var(--t2);min-width:38px;padding-top:2px;flex-shrink:0}
+.si-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.si-body{flex:1;min-width:0}
+.si-txt{font-size:var(--fs);font-weight:600;color:var(--tx);line-height:1.3}
+.si-end{font-size:10px;color:var(--t3);margin-top:1px}
+.si-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px}
+
+/* ── Status cards (sc) ── */
+.sc{display:flex;align-items:center;gap:10px;padding:11px 10px;border-left:3px solid transparent;border-radius:10px;margin-bottom:6px;background:var(--cr);transition:background .12s}
+.sc:last-child{margin-bottom:0}
+.sc.mine{cursor:pointer}
+.sc.mine:active{background:var(--wm)}
+.sc-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.sc-name{font-size:var(--fs);font-weight:700;color:var(--tx);margin-bottom:3px}
+.sc-b{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px}
+.sc-b.hm{background:rgba(74,140,106,.12);color:var(--gn)}
+.sc-b.out{background:rgba(200,86,46,.1);color:var(--ac)}
+.ret-badge{font-size:10px;color:var(--t2);margin-top:3px}
+.sc-mood{font-size:22px;margin-left:auto;flex-shrink:0}
+
+/* ── Bath buttons ── */
+.bath-chk{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 8px;border:2px solid var(--wm);border-radius:12px;background:var(--wm);font-family:'Zen Maru Gothic',sans-serif;font-size:calc(var(--fs) - 1px);font-weight:700;color:var(--t2);cursor:pointer;transition:all .15s;width:100%}
+.bath-chk-on{background:rgba(255,255,255,.8)}
+.bath-blue{border-color:var(--bl)!important;background:rgba(82,112,168,.1)!important;color:var(--bl)!important}
+.bath-green{border-color:var(--gn)!important;background:rgba(74,140,106,.1)!important;color:var(--gn)!important}
+
+/* ── Trash week row ── */
+.wk-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
+.wk-c{background:var(--wm);border-radius:10px;padding:7px 3px;text-align:center}
+.wk-c.tod{background:rgba(200,86,46,.12);border:1.5px solid rgba(200,86,46,.3)}
+.wk-dn{font-size:9px;font-weight:700;color:var(--t3);margin-bottom:3px}
+.wk-ic{font-size:11px;min-height:14px;line-height:1.2}
+.tr-types{background:var(--cr);border-radius:10px;padding:8px 10px}
+.tr-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--wm)}
+.tr-row:last-child{border-bottom:none}
+.tr-fr{color:var(--t2);font-weight:700}
+
+/* ── Notices / banners ── */
+.notice{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;margin-bottom:10px}
+.n-td{background:rgba(200,86,46,.1);border:1.5px solid rgba(200,86,46,.25)}
+.n-tm{background:rgba(212,160,48,.1);border:1.5px solid rgba(212,160,48,.25)}
+.ntxt{font-size:var(--fs);font-weight:700;color:var(--tx)}
+.nsub{font-size:11px;color:var(--t2);margin-top:2px}
 </style>
 </head>
 <body>
@@ -985,6 +1054,22 @@ body.dark .fi{background:var(--wm)}
           </div>
         </div>
       </div>
+      <!-- Location -->
+      <div class="sec">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title">📍 いまどこ？</div>
+          </div>
+          <div id="locList"><div class="empty">まだ誰も共有していません</div></div>
+        </div>
+      </div>
+      <!-- Family status -->
+      <div class="sec">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:10px">🏠 みんなの状況</div>
+          <div id="suCards"></div>
+        </div>
+      </div>
       <div id="trashNotice"></div>
     </div><!-- /pg-home -->
 
@@ -1030,7 +1115,7 @@ body.dark .fi{background:var(--wm)}
             <div class="card-toggle-arr open" id="arr-bath">▼</div>
           </div>
           <div class="card-body" id="body-bath">
-            <div id="bathCard"></div>
+            <div id="bathStatus"></div>
           </div>
         </div>
       </div>
@@ -1057,6 +1142,7 @@ body.dark .fi{background:var(--wm)}
           <button class="cal-tab" id="ct-day" onclick="setCalMode('day',this)">日</button>
           <button class="cal-tab" id="ct-ical" onclick="setCalMode('ical',this)">外部</button>
         </div>
+        <div id="frow" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px"></div>
         <div id="calBody"></div>
       </div>
       <div id="icalEvts"></div>
@@ -1089,22 +1175,6 @@ body.dark .fi{background:var(--wm)}
             <button class="btn btn-ghost" style="background:#F3E8FF;color:#7A5BA0;font-size:11px;padding:6px 10px" onclick="openModal('medicine')">＋ 追加</button>
           </div>
           <div id="medList"></div>
-        </div>
-      </div>
-      <!-- Location -->
-      <div class="sec">
-        <div class="card">
-          <div class="card-hdr">
-            <div class="card-title">📍 いまどこ？</div>
-          </div>
-          <div id="locList"><div class="empty">まだ誰も共有していません</div></div>
-        </div>
-      </div>
-      <!-- Family status -->
-      <div class="sec">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:10px">🏠 みんなの状況</div>
-          <div id="suCards"></div>
         </div>
       </div>
       <!-- Activity -->
@@ -1302,6 +1372,25 @@ body.dark .fi{background:var(--wm)}
     </div>
   </div>
 </div><!-- /settings-overlay -->
+
+
+<!-- Privacy overlay -->
+<div id="privacyOverlay" style="display:none;position:fixed;inset:0;z-index:750;background:var(--cr);overflow-y:auto;padding:20px 16px env(safe-area-inset-bottom,20px)">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;position:sticky;top:0;background:var(--cr);padding:10px 0">
+    <button onclick="document.getElementById('privacyOverlay').style.display='none'" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--ac);line-height:1">‹</button>
+    <div style="font-size:18px;font-weight:700;color:var(--tx)">プライバシーポリシー</div>
+  </div>
+  <div style="font-size:13px;color:var(--t2);line-height:1.8">
+    <b style="color:var(--tx)">収集する情報</b><br>
+    Googleアカウント情報（名前・メールアドレス）、アプリ内で登録した家族情報・予定・タスク・位置情報を収集します。<br><br>
+    <b style="color:var(--tx)">利用目的</b><br>
+    収集した情報は家族間の情報共有機能のみに使用し、第三者への提供・広告利用は行いません。<br><br>
+    <b style="color:var(--tx)">データの保管</b><br>
+    データはFirebase（Google Cloud）に暗号化して保管されます。<br><br>
+    <b style="color:var(--tx)">お問い合わせ</b><br>
+    フィードバック機能からご連絡ください。
+  </div>
+</div>
 
 <!-- Confirm dialog -->
 <div id="irori-confirm">
@@ -1665,7 +1754,11 @@ function loadFbCount(){
     window._fbCount=s.size;
   }).catch(()=>{});
 }
-function updateDD(){const now=new Date();const el=document.getElementById('hdrDate');if(el)el.textContent=(now.getMonth()+1)+'/'+(now.getDate())+'（'+DN[now.getDay()]+'）';}
+function updateDD(){
+  const now=new Date();
+  const el=document.getElementById('hdrDate');
+  if(el)el.textContent=(now.getMonth()+1)+'月'+(now.getDate())+'日（'+DN[now.getDay()]+'）';
+}
 
 
 
@@ -1725,6 +1818,11 @@ function openSettings(){
 function closeSettings(){
   document.getElementById('settings-overlay').classList.remove('open');
 }
+// Also handle back button via touch
+document.addEventListener('DOMContentLoaded',()=>{
+  const ov=document.getElementById('settings-overlay');
+  if(ov)ov.addEventListener('touchstart',()=>{},{ passive:true });
+});
 
 function applyAgeSettings(){
   if(!myProfile)return;
@@ -1804,7 +1902,7 @@ function renderHero(){
 }
 
 function renderHomeSummary(){
-  const el=document.getElementById('home-summary');if(!el)return;
+  const el=document.getElementById('homeSummary');if(!el)return;
   const today=tday();
   const bath=JSON.parse(localStorage.getItem('iedash_bath_'+ROOM)||'{}')[today]||{};
   const shopTotal=state.shopping.filter(s=>!s.done).length;
@@ -1820,7 +1918,7 @@ function renderHomeSummary(){
   el.innerHTML=items.map(it=>'<div style="display:flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;background:'+it.color+'15;border:1px solid '+it.color+'30;font-size:11px;font-weight:700;color:'+it.color+'">'+it.emoji+' '+it.label+'</div>').join('');
 }
 function renderBath(){
-  const el=document.getElementById('bathStatus');if(!el)return;
+  const el=document.getElementById('bathCard');if(!el)return;
   const data=JSON.parse(localStorage.getItem('iedash_bath_'+ROOM)||'{}');
   const today=tday();
   const d=data[today]||{washed:false,filled:false};
@@ -1885,7 +1983,7 @@ function quickToggleStatus(){
   addAct(newHome?'🏠 帰宅しました':'🚶 外出しました');
 }
 function renderSG(){
-  const el=document.getElementById('sg');if(!el)return;
+  const el=document.getElementById('suCards');if(!el)return;
   el.innerHTML=members.map(m=>{
     const s=state.status[m.uid]||{home:false,ret:''},mood=state.mood[m.uid]||'',mine=isMe(m.uid);
     return '<div class="sc '+(mine?'mine':'')+'" style="border-left-color:'+m.color+'" '+(mine?'onclick="quickTog()"':'')+'>'+
@@ -1901,205 +1999,30 @@ function renderSG(){
 }
 function quickTog(){const c=state.status[currentUser.uid]||{home:false};setSt(!c.home);}
 function renderSch(){
-  const el=document.getElementById('schList');if(!el)return;
-  const td=tday(),items=state.schedules.filter(s=>s.member===curM&&s.date===td).sort((a,b)=>a.time.localeCompare(b.time));
+  const el=document.getElementById('todaySchList');if(!el){renderHomeSummary();return;}
+  const td=tday(),items=state.schedules.filter(s=>s.date===td).sort((a,b)=>a.time.localeCompare(b.time));
+  renderHomeSummary();
   if(!items.length){el.innerHTML='<div class="empty">今日の予定はありません</div>';return;}
   el.innerHTML=items.map(s=>{
-    const mine=canEdit(s.ownerUid);
-    return '<div class="si" onclick="openModal(\'schedDet\',{id:\''+s.id+'\'})">'+
-      '<div class="si-time">'+s.time+'</div>'+
-      '<div class="si-dot" style="background:'+s.color+'"></div>'+
-      '<div class="si-body">'+
-        '<div class="si-txt">'+s.text+'</div>'+
-        (s.endTime?'<div class="si-end">〜 '+s.endTime+'</div>':'')+
-        '<div style="display:flex;align-items:center;gap:5px;margin-top:2px">'+
-          '<span class="si-tag" style="background:'+s.color+'22;color:'+s.color+'">'+s.tag+'</span>'+
-          (s.memo?'<span style="font-size:10px;color:var(--t3)">'+s.memo+'</span>':'')+
-        '</div>'+
-      '</div>'+
-      (mine?'<button class="del" onclick="event.stopPropagation();delSch(\''+s.id+'\')">✕</button>':'')+
-    '</div>';
+    const minfo=gm(s.member);
+    const del_btn=canEdit(s.ownerUid)?'<button class="del" onclick="event.stopPropagation();delSch(\''+s.id+'\')" style="flex-shrink:0">\u2715</button>':'';
+    const tag_span='<span class="si-tag" style="background:'+s.color+'22;color:'+s.color+'">'+s.tag+'</span>';
+    const memo_span=s.memo?'<span style="font-size:10px;color:var(--t3)">'+s.memo+'</span>':'';
+    const end_time=s.endTime?'<div class="si-end">\u301c '+s.endTime+'</div>':'';
+    return '<div class="si" onclick="openModal(\'schedDet\',{id:\''+s.id+'\'})">'
+      +'<div class="si-time">'+s.time+'</div>'
+      +'<div class="si-dot" style="background:'+s.color+'"></div>'
+      +'<div class="si-body">'
+        +'<div class="si-txt">'+minfo.emoji+' '+s.text+'</div>'
+        +end_time
+        +'<div style="display:flex;align-items:center;gap:5px;margin-top:2px">'+tag_span+memo_span+'</div>'
+      +'</div>'
+      +del_btn
+      +'</div>';
   }).join('');
-}
-function delSch(id){const s=state.schedules.find(x=>x.id===id);if(!s||!canEdit(s.ownerUid))return;if(!confirm('削除しますか？'))return;db.collection('iedash').doc(ROOM).collection('schedules').doc(id).delete().catch(console.error);}
-function getTrash(d){
-  const area=localStorage.getItem('iedash_trash_area')||'箕面市A-4地区';
-  const w=d.getDay(),t=[],n=Math.ceil(d.getDate()/7);
-  if(area==='箕面市A-4地区'||area==='箕面市A-1地区'){
-    if(w===1||w===4)t.push({name:'燃えるごみ',emoji:'🔥'});
-    if(w===3){
-      if(area==='箕面市A-4地区'){if(n===1||n===3)t.push({name:'かん・びん',emoji:'🥫'});if(n===2||n===4)t.push({name:'ペット・不燃',emoji:'♻️'});}
-      else{if(n===2||n===4)t.push({name:'かん・びん',emoji:'🥫'});if(n===1||n===3)t.push({name:'ペット・不燃',emoji:'♻️'});}
-    }
-  }else if(area==='箕面市B地区'){
-    if(w===2||w===5)t.push({name:'燃えるごみ',emoji:'🔥'});
-    if(w===4){if(n===1||n===3)t.push({name:'かん・びん',emoji:'🥫'});if(n===2||n===4)t.push({name:'ペット・不燃',emoji:'♻️'});}
-  }else if(area==='大阪市一般'){
-    if(w===1||w===4)t.push({name:'燃えるごみ',emoji:'🔥'});
-    if(w===3&&(n===1||n===3))t.push({name:'資源ごみ',emoji:'♻️'});
-  }
-  return t;
-}
-function renderTrash(){
-  // Update header label
-  const area=localStorage.getItem('iedash_trash_area')||'箕面市A-4地区';
-  const hdr=document.getElementById('trash-area-lbl');
-  if(hdr)hdr.textContent='🗑️ ゴミ出し（'+area+'）';
-  const today=new Date(),tmr=new Date(today);tmr.setDate(today.getDate()+1);
-  const td=getTrash(today),tm=getTrash(tmr),ne=document.getElementById('trashNotice');if(!ne)return;
-  ne.innerHTML=td.length?'<div class="notice n-td"><span style="font-size:24px">'+td[0].emoji+'</span><div><div class="ntxt">今日はゴミの日！'+td.map(x=>x.name).join('・')+'</div><div class="nsub">朝9時までに出してください</div></div></div>':
-    tm.length?'<div class="notice n-tm"><span style="font-size:24px">'+tm[0].emoji+'</span><div><div class="ntxt">明日はゴミの日！'+tm.map(x=>x.name).join('・')+'</div><div class="nsub">前日に準備しておきましょう</div></div></div>':'';
-  const st=new Date(today);st.setDate(today.getDate()-today.getDay());
-  const wk=Array.from({length:7},(_,i)=>{const d=new Date(st);d.setDate(st.getDate()+i);const tr=getTrash(d),isT=d.toDateString()===today.toDateString();return'<div class="wk-c '+(tr.length?'has':'')+' '+(isT?'tod':'')+'"><div class="wk-dn" style="'+(i===0?'color:var(--rd)':i===6?'color:var(--bl)':'')+'">'+DN[i]+'</div><div class="wk-ic">'+tr.map(x=>x.emoji).join('')+'</div></div>';}).join('');
-  const tc=document.getElementById('trashCard');if(!tc)return;
-  tc.innerHTML='<div style="font-size:11px;font-weight:700;color:var(--t3);margin-bottom:7px">今週のゴミ出し</div><div class="wk-row">'+wk+'</div><div class="tr-types"><div class="tr-row"><span>🔥 燃えるごみ</span><span class="tr-fr">毎週 月・木</span></div><div class="tr-row"><span>🥫 かん・びん</span><span class="tr-fr">第1・3水曜</span></div><div class="tr-row"><span>♻️ ペット・不燃・危険・大型</span><span class="tr-fr">第2・4水曜</span></div></div>';
 }
 
-function renderMedToday(){
-  const wrap=document.getElementById('med-today-wrap');
-  const el=document.getElementById('med-today-list');
-  if(!wrap||!el)return;
-  // 自分のお薬だけ表示
-  const myMeds=state.medicine.filter(m=>m.member===currentUser.uid||m.ownerUid===currentUser.uid);
-  if(!myMeds.length){wrap.style.display='none';return;}
-  wrap.style.display='block';
-  const td=tday();
-  el.innerHTML=myMeds.map(m=>{
-    const taken=m.taken&&m.taken[td];
-    return '<div class="med-today-item">'+
-      '<div>'+
-        '<div class="med-today-name">'+m.name+'</div>'+
-        '<div class="med-today-time">'+m.times.join(' / ')+'</div>'+
-      '</div>'+
-      '<div class="med-today-chk '+(taken?'done':'')+'" onclick="togMedToday(\''+m.id+'\')">'+
-        (taken?'✓':'')+'</div>'+
-    '</div>';
-  }).join('');
-}
-function togMedToday(id){
-  togMed(id);
-  setTimeout(()=>{renderMedToday();renderHero();},300);
-}
-
-function renderMed(){
-  const el=document.getElementById('medList');if(!el)return;
-  if(!state.medicine.length){el.innerHTML='<div class="empty">お薬が登録されていません</div>';return;}
-  const td=tday();
-  el.innerHTML=state.medicine.map(m=>{
-    const taken=m.taken&&m.taken[td],mine=canEdit(m.ownerUid);
-    return '<div class="med-item">'+
-      '<div class="med-ic">💊</div>'+
-      '<div style="flex:1">'+
-        '<div class="med-name">'+m.name+'<span style="font-size:10px;color:var(--t3);margin-left:6px">'+gm(m.member).emoji+' '+gm(m.member).name+'</span></div>'+
-        '<div class="med-time">'+m.times.join(' / ')+'</div>'+
-      '</div>'+
-      '<div class="med-chk '+(taken?'done':'')+'" onclick="togMed(\''+m.id+'\')"></div>'+
-      (mine?'<button class="del" onclick="delMed(\''+m.id+'\')">✕</button>':'')+
-    '</div>';
-  }).join('');
-}
-function togMed(id){
-  const m=state.medicine.find(x=>x.id===id);if(!m)return;
-  const td=tday(),taken=m.taken||{};taken[td]=!taken[td];
-  db.collection('iedash').doc(ROOM).collection('medicine').doc(id).update({taken}).catch(console.error);
-  if(!taken[td])return;addAct('💊 '+m.name+' 服用済み ✓');
-}
-async function delMed(id){const m=state.medicine.find(x=>x.id===id);if(!m||!canEdit(m.ownerUid))return;const ok=await iroriConfirm({icon:'💊',title:'お薬を削除',msg:m.name+'を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('medicine').doc(id).delete().catch(console.error);}
-function renderShop(){
-  const el=document.getElementById('shopList');if(!el)return;
-  if(!state.shopping.length){el.innerHTML='<div class="empty">リストは空です</div>';return;}
-  const sorted=[...state.shopping].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;const p={'急ぎ':0,'普通':1,'なくなったら':2};return(p[a.priority]||1)-(p[b.priority]||1);});
-  el.innerHTML=sorted.map(item=>{const mine=canEdit(item.ownerUid);return'<div class="li"><div class="chk '+(item.done?'done':'')+'" onclick="togShop(\''+item.id+'\','+!item.done+')"></div><div class="li-txt '+(item.done?'done':'')+'" onclick="openModal(\'shopDet\',{id:\''+item.id+'\'})">'+item.text+'</div>'+(item.priority==='急ぎ'?'<span class="tag tag-urg">🔴 急ぎ</span>':'')+(mine?'<button class="del" onclick="delShop(\''+item.id+'\')">✕</button>':'')+' </div>';}).join('');
-}
-function togShop(id,done){
-  const ref=db.collection('iedash').doc(ROOM).collection('shopping').doc(id);
-  ref.update({done:done}).catch(console.error);
-  renderHomeSummary();
-}
-async function delShop(id){const ok=await iroriConfirm({icon:'🗑️',title:'削除',msg:'この買い物を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('shopping').doc(id).delete().catch(console.error);}
-function clearDoneShop(){state.shopping.filter(x=>x.done&&canEdit(x.ownerUid)).forEach(x=>delShop(x.id));}
-function renderTasks(){
-  const el=document.getElementById('taskList');if(!el)return;
-  if(!state.tasks.length){el.innerHTML='<div class="empty">タスクはありません</div>';return;}
-  const td=tday();
-  const sorted=[...state.tasks].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;if(a.due&&b.due)return a.due.localeCompare(b.due);return a.due?-1:b.due?1:0;});
-  el.innerHTML=sorted.map(t=>{const ov=t.due&&t.due<td&&!t.done,dueT=t.due===td&&!t.done,mine=canEdit(t.ownerUid);return'<div class="li"><div class="chk-sq '+(t.done?'done':'')+'" onclick="togTask(\''+t.id+'\','+!t.done+')"></div><div class="li-txt '+(t.done?'done':'')+'" onclick="openModal(\'taskDet\',{id:\''+t.id+'\'})">'+t.text+'</div><div class="tag">'+t.assign+'</div>'+(ov?'<span class="tag tag-ov">⚠️ 期限切れ</span>':'')+(dueT?'<span class="tag tag-due">今日まで</span>':'')+(t.due&&!ov&&!dueT?'<span class="tag tag-due">'+t.due.slice(5).replace('-','/')+'</span>':'')+(mine?'<button class="del" onclick="delTask(\''+t.id+'\')">✕</button>':'')+' </div>';}).join('');
-}
-function togTask(id,done){const t=state.tasks.find(x=>x.id===id);db.collection('iedash').doc(ROOM).collection('tasks').doc(id).update({done}).then(()=>{if(done&&t)addAct('✅「'+t.text+'」完了！');}).catch(console.error);}
-async function delTask(id){const ok=await iroriConfirm({icon:'🗑️',title:'削除',msg:'このタスクを削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('tasks').doc(id).delete().catch(console.error);}
-function clearDoneTask(){state.tasks.filter(x=>x.done&&canEdit(x.ownerUid)).forEach(x=>delTask(x.id));}
-function renderTmr(){
-  const el=document.getElementById('tmrList');if(!el)return;
-  if(!state.tomorrow.length){el.innerHTML='<div style="text-align:center;padding:9px;font-size:11px;color:rgba(255,255,255,.35)">まだ入力なし</div>';return;}
-  el.innerHTML=state.tomorrow.map(t=>{const m=gm(t.member),mine=canEdit(t.ownerUid);return'<div class="tmr-item"><span style="font-size:20px;width:24px;text-align:center">'+m.emoji+'</span><div style="flex:1"><div class="tmr-name">'+m.name+'</div><div class="tmr-plan">'+t.plan+'</div></div>'+(mine?'<button style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:14px" onclick="delTmr(\''+t.id+'\')">✕</button>':'')+' </div>';}).join('');
-}
-function delTmr(id){db.collection('iedash').doc(ROOM).collection('tomorrow').doc(id).delete().catch(console.error);}
-// ─── EMERGENCY ───
-async function sendEmergency(){
-  const ok=await iroriConfirm({icon:'🚨',title:'緊急連絡',msg:'家族全員に緊急通知を送ります。よろしいですか？',okLabel:'送信する',okColor:'#C94040'});if(!ok)return;
-  await db.collection('iedash').doc(ROOM).collection('emergency').add({
-    from:currentUser.uid,fromName:myProfile.name,fromEmoji:myProfile.emoji,
-    message:myProfile.name+'から緊急連絡があります！',
-    createdAt:new Date().toISOString()
-  });
-  addAct('🚨 緊急連絡を送信しました');
-}
-function showEmergencyAlert(e){
-  if(isMe(e.from))return;
-  const key='emg_shown_'+e.id;
-  if(localStorage.getItem(key))return;
-  localStorage.setItem(key,'1');
-  if('Notification'in window&&Notification.permission==='granted')
-    new Notification('🚨 緊急連絡！',{body:e.message,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%23C94040"/><text y="130" x="96" text-anchor="middle" font-size="110">🚨</text></svg>'});
-  const d=document.createElement('div');
-  d.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(201,64,64,.95);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:#fff;font-family:Zen Maru Gothic,sans-serif;padding:24px;text-align:center';
-  d.innerHTML='<div style="font-size:72px">🚨</div><div style="font-size:24px;font-weight:700">緊急連絡！</div><div style="font-size:18px">'+e.fromEmoji+' '+e.fromName+'からのメッセージ</div><div style="font-size:15px;opacity:.85;line-height:1.7">すぐに連絡を取ってください</div><button onclick="this.parentNode.remove()" style="background:#fff;color:#C94040;border:none;border-radius:14px;padding:14px 32px;font-family:Zen Maru Gothic,sans-serif;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px">確認しました</button>';
-  document.body.appendChild(d);
-}
-// ─── CALENDAR ───
-function setCalMode(m){calMode=m;['month','week','day'].forEach(v=>document.getElementById('cvt-'+v).classList.toggle('active',v===m));renderCal();}
-function calDelta(d){
-  if(calMode==='month'){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}}
-  else if(calMode==='week'){calWeek=new Date(calWeek);calWeek.setDate(calWeek.getDate()+d*7);}
-  else if(calMode==='day'){calDay=new Date(calDay);calDay.setDate(calDay.getDate()+d);}
-  renderCal();
-}
-function renderCal(){
-  const frow=document.getElementById('frow');
-  frow.innerHTML=members.map(m=>'<div class="fc '+(calFilter.length===0||calFilter.includes(m.uid)?'active':'')+'" style="background:'+m.color+'22;color:'+m.color+'" onclick="togCF(\''+m.uid+'\')">'+m.emoji+' '+m.name+'</div>').join('');
-  if(calMode==='month')renderMonthCal();
-  else if(calMode==='week')renderWeekCal();
-  else renderDayCal();
-}
-function togCF(u){calFilter=calFilter.includes(u)?calFilter.filter(x=>x!==u):[...calFilter,u];renderCal();}
-function filteredSch(){return state.schedules.filter(s=>calFilter.length===0||calFilter.includes(s.member));}
-function renderMonthCal(){
-  const mn=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('calTitle').textContent=calY+'年 '+mn[calM];
-  const today=new Date(),first=new Date(calY,calM,1),last=new Date(calY,calM+1,0);
-  // Header row
-  let html='<div class="gcal-grid">'+DN.map((d,i)=>'<div class="gcal-dh'+(i===0?' s':i===6?' sat':'')+'" >'+d+'</div>').join('');
-  // Leading empty cells
-  for(let i=0;i<first.getDay();i++){const pd=new Date(calY,calM,-first.getDay()+i+1);html+='<div class="gcal-cell gcal-other"><div class="gcal-dn">'+pd.getDate()+'</div></div>';}
-  // Day cells
-  for(let d=1;d<=last.getDate();d++){
-    const dt=new Date(calY,calM,d),dow=dt.getDay(),ds=calY+'-'+p2(calM+1)+'-'+p2(d),isT=dt.toDateString()===today.toDateString();
-    const sc=filteredSch().filter(s=>s.date===ds),tr=getTrash(dt);
-    const trStr=tr.length?'<span style="font-size:9px;margin-left:2px;opacity:.8">'+tr.map(x=>x.emoji).join('')+'</span>':'';
-    html+='<div class="gcal-cell'+(isT?' gcal-today':'')+(dow===0?' gcal-sun':dow===6?' gcal-sat':'')+'" onclick="jumpToDay('+calY+','+calM+','+d+')">'+
-      '<div style="display:flex;align-items:center;justify-content:center;margin-bottom:2px">'+
-        '<div class="gcal-dn'+(isT?' gcal-dn-today':'')+'">'+(isT?'<span>'+d+'</span>':d)+'</div>'+
-        trStr+
-      '</div>'+
-      sc.slice(0,3).map(s=>'<div class="gcal-evt-pill" style="background:'+s.color+'20;color:'+s.color+';border-left:3px solid '+s.color+'">'+s.text.slice(0,8)+'</div>').join('')+
-      (sc.length>3?'<div class="gcal-more">+'+(sc.length-3)+'件</div>':'')+
-    '</div>';
-  }
-  html+='</div>';
-  const evts=renderEvtList(calY+'-'+p2(calM+1));
-  document.getElementById('calBody').innerHTML=html+'<div class="evtlist" style="margin-top:8px">'+evts+'</div>';
-}
-function jumpToDay(y,m,d){calMode='day';calDay=new Date(y,m,d);['month','week','day'].forEach(v=>document.getElementById('cvt-'+v).classList.toggle('active',v==='day'));renderCal();}
+function jumpToDay(y,m,d){calMode='day';calDay=new Date(y,m,d);['month','week','day'].forEach(v=>{const btn=document.getElementById('ct-'+v);if(btn)btn.classList.toggle('active',v==='day')});renderCal();}
 function renderWeekCal(){
   const start=new Date(calWeek),end=new Date(start);end.setDate(start.getDate()+6);
   const today=new Date();
@@ -2275,26 +2198,7 @@ function renderNhist(){const el=document.getElementById('nhist');if(!el)return;i
 function openPrivacy(){
   document.getElementById('privacyOverlay').style.display='block';
 }
-// Meal helpers
-const MEAL_SLOTS=[
-  {key:'breakfast',label:'🌅 朝ごはん',timeKey:'breakfast_time',placeholder:'料理名（例：トースト）'},
-  {key:'lunch',label:'☀️ 昼ごはん',timeKey:'lunch_time',placeholder:'料理名（例：カレー）'},
-  {key:'dinner',label:'🌙 夜ごはん',timeKey:'dinner_time',placeholder:'料理名（例：鍋）'},
-];
-const DN7=['日','月','火','水','木','金','土'];
-// Meal sync: templates stored in Firestore, today overrides in localStorage
-async function syncMealTpl(){
-  if(!ROOM||!db)return;
-  const doc=await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').get();
-  if(doc.exists){
-    localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(doc.data().tpl||{}));
-  }
-}
-async function saveMealTplToFirestore(tpl){
-  if(!ROOM||!db)return;
-  await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').set({tpl,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(tpl));
-}
+
 function getMealForToday(){
   // Today override → weekday template → empty
   const today=tday();
@@ -2987,7 +2891,7 @@ function applySettings(){
   if(localStorage.getItem('iedash_dark')==='1')document.body.classList.add('dark');
   if(localStorage.getItem('iedash_elder')==='1')document.body.classList.add('elder');
 }
-function doSignOut(){if(confirm('ログアウトしますか？'))auth.signOut().catch(console.error);}
+async function doSignOut(){const ok=await iroriConfirm({icon:'🚪',title:'ログアウト',msg:'ログアウトしますか？',okLabel:'ログアウト',okColor:'#5C3D2E'});if(ok)auth.signOut().catch(console.error);}
 function openOv(){document.getElementById('modal').classList.add('open');}
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 function ocl(e){if(e.target===document.getElementById('modal'))closeModal();}
@@ -3009,9 +2913,7 @@ function setPage(name,el){
   // const tabMap={home:'home',todo:'todo',calendar:'calendar',status:'status'};
   // if(tabMap[name])setTimeout(()=>showTabHint(tabMap[name]),400);
 }
-function closeSettings(){
-  document.getElementById('pg-settings-overlay').style.display='none';
-}
+
 function initSettingsPage(){
   // Profile card
   if(myProfile){
@@ -3052,8 +2954,17 @@ function openEditProfile(){openModal('editProfile');}
 function showRoomInvite(){
   db.collection('iedash').doc(ROOM).get().then(d=>{
     const name=d.exists?d.data().name||ROOM:ROOM;
-    showNewRoomCode(ROOM,name);
-  }).catch(()=>showNewRoomCode(ROOM,ROOM));
+    const mc=document.getElementById('mc');
+    mc.innerHTML='<div class="m-title">🏠 ルーム情報</div>'+
+      '<div class="dr"><div class="dl">ルーム名</div><div class="dv" style="font-weight:700">'+name+'</div></div>'+
+      '<div class="dr"><div class="dl">招待コード</div><div class="dv"><span style="font-size:20px;font-weight:700;letter-spacing:.1em;color:var(--ac)">'+ROOM+'</span></div></div>'+
+      '<button class="btn btn-o btn-full" onclick="cpCode(ROOM)">コードをコピー</button>'+
+      '<button class="btn btn-ghost btn-full" onclick="shareRoomCode(ROOM,\''+name+'\')">シェアする</button>'+
+      '<button class="btn btn-ghost btn-full" onclick="closeModal()">閉じる</button>';
+    openOv();
+  }).catch(()=>{
+    showToast('ルーム情報の取得に失敗しました');
+  });
 }
 function openTrashAreaPicker(){
   const AREAS=[
@@ -3217,6 +3128,224 @@ function checkTrashBanner(){
 // → rs-card内にすでにテキストあり、さらに強化する
 
 // setPageにhint表示を追加
+
+
+
+// ── Recovered missing functions ──
+
+async function delSch(id){const s=state.schedules.find(x=>x.id===id);if(!s||!canEdit(s.ownerUid))return;const ok=await iroriConfirm({icon:'📅',title:'予定を削除',msg:s.text+'を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('schedules').doc(id).delete().catch(console.error);}
+
+function getTrash(d){
+  const area=localStorage.getItem('iedash_trash_area')||'箕面市A-4地区';
+  const w=d.getDay(),t=[],n=Math.ceil(d.getDate()/7);
+  if(area==='箕面市A-4地区'||area==='箕面市A-1地区'){
+    if(w===1||w===4)t.push({name:'燃えるごみ',emoji:'🔥'});
+    if(w===3){
+      if(area==='箕面市A-4地区'){if(n===1||n===3)t.push({name:'かん・びん',emoji:'🥫'});if(n===2||n===4)t.push({name:'ペット・不燃',emoji:'♻️'});}
+      else{if(n===2||n===4)t.push({name:'かん・びん',emoji:'🥫'});if(n===1||n===3)t.push({name:'ペット・不燃',emoji:'♻️'});}
+    }
+  }else if(area==='箕面市B地区'){
+    if(w===2||w===5)t.push({name:'燃えるごみ',emoji:'🔥'});
+    if(w===4){if(n===1||n===3)t.push({name:'かん・びん',emoji:'🥫'});if(n===2||n===4)t.push({name:'ペット・不燃',emoji:'♻️'});}
+  }else if(area==='大阪市一般'){
+    if(w===1||w===4)t.push({name:'燃えるごみ',emoji:'🔥'});
+    if(w===3&&(n===1||n===3))t.push({name:'資源ごみ',emoji:'♻️'});
+  }
+  return t;
+}
+
+function renderTrash(){
+  // Update header label
+  const area=localStorage.getItem('iedash_trash_area')||'箕面市A-4地区';
+  const hdr=document.getElementById('trash-area-lbl');
+  if(hdr)hdr.textContent='🗑️ ゴミ出し（'+area+'）';
+  const today=new Date(),tmr=new Date(today);tmr.setDate(today.getDate()+1);
+  const td=getTrash(today),tm=getTrash(tmr),ne=document.getElementById('trashNotice');if(!ne)return;
+  ne.innerHTML=td.length?'<div class="notice n-td"><span style="font-size:24px">'+td[0].emoji+'</span><div><div class="ntxt">今日はゴミの日！'+td.map(x=>x.name).join('・')+'</div><div class="nsub">朝9時までに出してください</div></div></div>':
+    tm.length?'<div class="notice n-tm"><span style="font-size:24px">'+tm[0].emoji+'</span><div><div class="ntxt">明日はゴミの日！'+tm.map(x=>x.name).join('・')+'</div><div class="nsub">前日に準備しておきましょう</div></div></div>':'';
+  const st=new Date(today);st.setDate(today.getDate()-today.getDay());
+  const wk=Array.from({length:7},(_,i)=>{const d=new Date(st);d.setDate(st.getDate()+i);const tr=getTrash(d),isT=d.toDateString()===today.toDateString();return'<div class="wk-c '+(tr.length?'has':'')+' '+(isT?'tod':'')+'"><div class="wk-dn" style="'+(i===0?'color:var(--rd)':i===6?'color:var(--bl)':'')+'">'+DN[i]+'</div><div class="wk-ic">'+tr.map(x=>x.emoji).join('')+'</div></div>';}).join('');
+  const tc=document.getElementById('trashCal');if(!tc)return;
+  tc.innerHTML='<div style="font-size:11px;font-weight:700;color:var(--t3);margin-bottom:7px">今週のゴミ出し</div><div class="wk-row">'+wk+'</div><div class="tr-types"><div class="tr-row"><span>🔥 燃えるごみ</span><span class="tr-fr">毎週 月・木</span></div><div class="tr-row"><span>🥫 かん・びん</span><span class="tr-fr">第1・3水曜</span></div><div class="tr-row"><span>♻️ ペット・不燃・危険・大型</span><span class="tr-fr">第2・4水曜</span></div></div>';
+}
+
+function renderMedToday(){
+  const wrap=document.getElementById('med-today-wrap');
+  const el=document.getElementById('med-today-list');
+  if(!wrap||!el)return;
+  // 自分のお薬だけ表示
+  const myMeds=state.medicine.filter(m=>m.member===currentUser.uid||m.ownerUid===currentUser.uid);
+  if(!myMeds.length){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  const td=tday();
+  el.innerHTML=myMeds.map(m=>{
+    const taken=m.taken&&m.taken[td];
+    return '<div class="med-today-item">'+
+      '<div>'+
+        '<div class="med-today-name">'+m.name+'</div>'+
+        '<div class="med-today-time">'+m.times.join(' / ')+'</div>'+
+      '</div>'+
+      '<div class="med-today-chk '+(taken?'done':'')+'" onclick="togMedToday(\''+m.id+'\')">'+
+        (taken?'✓':'')+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+function togMedToday(id){
+  togMed(id);
+  setTimeout(()=>{renderMedToday();renderHero();},300);
+}
+
+function renderMed(){
+  const el=document.getElementById('medList');if(!el)return;
+  if(!state.medicine.length){el.innerHTML='<div class="empty">お薬が登録されていません</div>';return;}
+  const td=tday();
+  el.innerHTML=state.medicine.map(m=>{
+    const taken=m.taken&&m.taken[td],mine=canEdit(m.ownerUid);
+    return '<div class="med-item">'+
+      '<div class="med-ic">💊</div>'+
+      '<div style="flex:1">'+
+        '<div class="med-name">'+m.name+'<span style="font-size:10px;color:var(--t3);margin-left:6px">'+gm(m.member).emoji+' '+gm(m.member).name+'</span></div>'+
+        '<div class="med-time">'+m.times.join(' / ')+'</div>'+
+      '</div>'+
+      '<div class="med-chk '+(taken?'done':'')+'" onclick="togMed(\''+m.id+'\')"></div>'+
+      (mine?'<button class="del" onclick="delMed(\''+m.id+'\')">✕</button>':'')+
+    '</div>';
+  }).join('');
+}
+
+function togMed(id){
+  const m=state.medicine.find(x=>x.id===id);if(!m)return;
+  const td=tday(),taken=m.taken||{};taken[td]=!taken[td];
+  db.collection('iedash').doc(ROOM).collection('medicine').doc(id).update({taken}).catch(console.error);
+  if(!taken[td])return;addAct('💊 '+m.name+' 服用済み ✓');
+}
+
+async function delMed(id){const m=state.medicine.find(x=>x.id===id);if(!m||!canEdit(m.ownerUid))return;const ok=await iroriConfirm({icon:'💊',title:'お薬を削除',msg:m.name+'を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('medicine').doc(id).delete().catch(console.error);}
+
+function renderShop(){
+  const el=document.getElementById('shopList');if(!el)return;
+  if(!state.shopping.length){el.innerHTML='<div class="empty">リストは空です</div>';return;}
+  const sorted=[...state.shopping].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;const p={'急ぎ':0,'普通':1,'なくなったら':2};return(p[a.priority]||1)-(p[b.priority]||1);});
+  el.innerHTML=sorted.map(item=>{const mine=canEdit(item.ownerUid);return'<div class="li"><div class="chk '+(item.done?'done':'')+'" onclick="togShop(\''+item.id+'\','+!item.done+')"></div><div class="li-txt '+(item.done?'done':'')+'" onclick="openModal(\'shopDet\',{id:\''+item.id+'\'})">'+item.text+'</div>'+(item.priority==='急ぎ'?'<span class="tag tag-urg">🔴 急ぎ</span>':'')+(mine?'<button class="del" onclick="delShop(\''+item.id+'\')">✕</button>':'')+' </div>';}).join('');
+}
+
+function togShop(id,done){
+  const ref=db.collection('iedash').doc(ROOM).collection('shopping').doc(id);
+  ref.update({done:done}).catch(console.error);
+  renderHomeSummary();
+}
+
+async function delShop(id){const ok=await iroriConfirm({icon:'🗑️',title:'削除',msg:'この買い物を削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('shopping').doc(id).delete().catch(console.error);}
+
+function clearDoneShop(){state.shopping.filter(x=>x.done&&canEdit(x.ownerUid)).forEach(x=>delShop(x.id));}
+
+function renderTasks(){
+  const el=document.getElementById('taskList');if(!el)return;
+  if(!state.tasks.length){el.innerHTML='<div class="empty">タスクはありません</div>';return;}
+  const td=tday();
+  const sorted=[...state.tasks].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;if(a.due&&b.due)return a.due.localeCompare(b.due);return a.due?-1:b.due?1:0;});
+  el.innerHTML=sorted.map(t=>{const ov=t.due&&t.due<td&&!t.done,dueT=t.due===td&&!t.done,mine=canEdit(t.ownerUid);return'<div class="li"><div class="chk-sq '+(t.done?'done':'')+'" onclick="togTask(\''+t.id+'\','+!t.done+')"></div><div class="li-txt '+(t.done?'done':'')+'" onclick="openModal(\'taskDet\',{id:\''+t.id+'\'})">'+t.text+'</div><div class="tag">'+t.assign+'</div>'+(ov?'<span class="tag tag-ov">⚠️ 期限切れ</span>':'')+(dueT?'<span class="tag tag-due">今日まで</span>':'')+(t.due&&!ov&&!dueT?'<span class="tag tag-due">'+t.due.slice(5).replace('-','/')+'</span>':'')+(mine?'<button class="del" onclick="delTask(\''+t.id+'\')">✕</button>':'')+' </div>';}).join('');
+}
+
+function togTask(id,done){const t=state.tasks.find(x=>x.id===id);db.collection('iedash').doc(ROOM).collection('tasks').doc(id).update({done}).then(()=>{if(done&&t)addAct('✅「'+t.text+'」完了！');}).catch(console.error);}
+
+async function delTask(id){const ok=await iroriConfirm({icon:'🗑️',title:'削除',msg:'このタスクを削除しますか？',okLabel:'削除する',okColor:'#C94040'});if(!ok)return;db.collection('iedash').doc(ROOM).collection('tasks').doc(id).delete().catch(console.error);}
+
+function clearDoneTask(){state.tasks.filter(x=>x.done&&canEdit(x.ownerUid)).forEach(x=>delTask(x.id));}
+
+function renderTmr(){
+  const el=document.getElementById('tmrList');if(!el)return;
+  if(!state.tomorrow.length){el.innerHTML='<div style="text-align:center;padding:9px;font-size:11px;color:rgba(255,255,255,.35)">まだ入力なし</div>';return;}
+  el.innerHTML=state.tomorrow.map(t=>{const m=gm(t.member),mine=canEdit(t.ownerUid);return'<div class="tmr-item"><span style="font-size:20px;width:24px;text-align:center">'+m.emoji+'</span><div style="flex:1"><div class="tmr-name">'+m.name+'</div><div class="tmr-plan">'+t.plan+'</div></div>'+(mine?'<button style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:14px" onclick="delTmr(\''+t.id+'\')">✕</button>':'')+' </div>';}).join('');
+}
+
+function delTmr(id){db.collection('iedash').doc(ROOM).collection('tomorrow').doc(id).delete().catch(console.error);}
+
+async function sendEmergency(){
+  const ok=await iroriConfirm({icon:'🚨',title:'緊急連絡',msg:'家族全員に緊急通知を送ります。よろしいですか？',okLabel:'送信する',okColor:'#C94040'});if(!ok)return;
+  await db.collection('iedash').doc(ROOM).collection('emergency').add({
+    from:currentUser.uid,fromName:myProfile.name,fromEmoji:myProfile.emoji,
+    message:myProfile.name+'から緊急連絡があります！',
+    createdAt:new Date().toISOString()
+  });
+  addAct('🚨 緊急連絡を送信しました');
+}
+
+function showEmergencyAlert(e){
+  if(isMe(e.from))return;
+  const key='emg_shown_'+e.id;
+  if(localStorage.getItem(key))return;
+  localStorage.setItem(key,'1');
+  if('Notification'in window&&Notification.permission==='granted')
+    new Notification('🚨 緊急連絡！',{body:e.message,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%23C94040"/><text y="130" x="96" text-anchor="middle" font-size="110">🚨</text></svg>'});
+  const d=document.createElement('div');
+  d.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(201,64,64,.95);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:#fff;font-family:Zen Maru Gothic,sans-serif;padding:24px;text-align:center';
+  d.innerHTML='<div style="font-size:72px">🚨</div><div style="font-size:24px;font-weight:700">緊急連絡！</div><div style="font-size:18px">'+e.fromEmoji+' '+e.fromName+'からのメッセージ</div><div style="font-size:15px;opacity:.85;line-height:1.7">すぐに連絡を取ってください</div><button onclick="this.parentNode.remove()" style="background:#fff;color:#C94040;border:none;border-radius:14px;padding:14px 32px;font-family:Zen Maru Gothic,sans-serif;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px">確認しました</button>';
+  document.body.appendChild(d);
+}
+
+function setCalMode(m){calMode=m;['month','week','day'].forEach(v=>{const btn=document.getElementById('ct-'+v);if(btn)btn.classList.toggle('active',v===m)});renderCal();}
+
+function calDelta(d){
+  if(calMode==='month'){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}}
+  else if(calMode==='week'){calWeek=new Date(calWeek);calWeek.setDate(calWeek.getDate()+d*7);}
+  else if(calMode==='day'){calDay=new Date(calDay);calDay.setDate(calDay.getDate()+d);}
+  renderCal();
+}
+
+function renderCal(){
+  const frow=document.getElementById('frow');
+  frow.innerHTML=members.map(m=>'<div class="fc '+(calFilter.length===0||calFilter.includes(m.uid)?'active':'')+'" style="background:'+m.color+'22;color:'+m.color+'" onclick="togCF(\''+m.uid+'\')">'+m.emoji+' '+m.name+'</div>').join('');
+  if(calMode==='month')renderMonthCal();
+  else if(calMode==='week')renderWeekCal();
+  else renderDayCal();
+}
+
+function togCF(u){calFilter=calFilter.includes(u)?calFilter.filter(x=>x!==u):[...calFilter,u];renderCal();}
+
+function filteredSch(){return state.schedules.filter(s=>calFilter.length===0||calFilter.includes(s.member));}
+
+function renderMonthCal(){
+  const mn=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('calTitle').textContent=calY+'年 '+mn[calM];
+  const today=new Date(),first=new Date(calY,calM,1),last=new Date(calY,calM+1,0);
+  // Header row
+  let html='<div class="gcal-grid">'+DN.map((d,i)=>'<div class="gcal-dh'+(i===0?' s':i===6?' sat':'')+'" >'+d+'</div>').join('');
+  // Leading empty cells
+  for(let i=0;i<first.getDay();i++){const pd=new Date(calY,calM,-first.getDay()+i+1);html+='<div class="gcal-cell gcal-other"><div class="gcal-dn">'+pd.getDate()+'</div></div>';}
+  // Day cells
+  for(let d=1;d<=last.getDate();d++){
+    const dt=new Date(calY,calM,d),dow=dt.getDay(),ds=calY+'-'+p2(calM+1)+'-'+p2(d),isT=dt.toDateString()===today.toDateString();
+    const sc=filteredSch().filter(s=>s.date===ds),tr=getTrash(dt);
+    const trStr=tr.length?'<span style="font-size:9px;margin-left:2px;opacity:.8">'+tr.map(x=>x.emoji).join('')+'</span>':'';
+    html+='<div class="gcal-cell'+(isT?' gcal-today':'')+(dow===0?' gcal-sun':dow===6?' gcal-sat':'')+'" onclick="jumpToDay('+calY+','+calM+','+d+')">'+
+      '<div style="display:flex;align-items:center;justify-content:center;margin-bottom:2px">'+
+        '<div class="gcal-dn'+(isT?' gcal-dn-today':'')+'">'+(isT?'<span>'+d+'</span>':d)+'</div>'+
+        trStr+
+      '</div>'+
+      sc.slice(0,3).map(s=>'<div class="gcal-evt-pill" style="background:'+s.color+'20;color:'+s.color+';border-left:3px solid '+s.color+'">'+s.text.slice(0,8)+'</div>').join('')+
+      (sc.length>3?'<div class="gcal-more">+'+(sc.length-3)+'件</div>':'')+
+    '</div>';
+  }
+  html+='</div>';
+  const evts=renderEvtList(calY+'-'+p2(calM+1));
+  document.getElementById('calBody').innerHTML=html+'<div class="evtlist" style="margin-top:8px">'+evts+'</div>';
+}
+
+async function syncMealTpl(){
+  if(!ROOM||!db)return;
+  const doc=await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').get();
+  if(doc.exists){
+    localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(doc.data().tpl||{}));
+  }
+}
+
+async function saveMealTplToFirestore(tpl){
+  if(!ROOM||!db)return;
+  await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').set({tpl,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(tpl));
+}
 
 applySettings();init();
 
