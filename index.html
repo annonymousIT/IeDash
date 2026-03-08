@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#4E3425">
-<title>いえダッシュ</title>
+<title>Irori</title>
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -19,10 +19,10 @@
   --cr:#FAF7F2;--wm:#EFE8DA;--br:#4E3425;--br2:#6B4535;
   --ac:#D4663E;--gn:#5A9E7C;--bl:#6480B8;--yl:#E8B84B;--rd:#C94040;
   --tx:#28180D;--t2:#7A6558;--t3:#B09A8E;--cd:#FFF;
-  --sh:0 2px 16px rgba(78,52,37,.09);--r:16px;
+  --sh:0 3px 20px rgba(78,52,37,.13);--r:16px;
   --fs:14px;--fi:20px
 }
-body.dark{--cr:#221810;--wm:#352820;--tx:#F5EDE5;--t2:#C8A898;--t3:#8A7060;--cd:#2C1E16;--sh:0 2px 16px rgba(0,0,0,.35)}
+body.dark{--cr:#1C1209;--wm:#2E2018;--tx:#F0E6DC;--t2:#D4B8A8;--t3:#A08878;--cd:#261A12;--sh:0 2px 16px rgba(0,0,0,.4)}
 body.dark .hdr{background:#1A110A}
 body.dark .bnav{background:#2C1E16;border-color:#452E22}
 body.dark .sheet{background:#2C1E16}
@@ -55,9 +55,25 @@ body.elder .ni-ic{font-size:26px}
 body.elder .ni-lb{font-size:11px}
 body.elder .sc-name{font-size:16px}
 body.elder .li-txt{font-size:16px}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;word-break:keep-all;overflow-wrap:break-word}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--tx);display:flex;flex-direction:column;font-size:var(--fs)}
+/* Font size cascade - all key elements scale with --fs */
+.card-title{font-size:calc(var(--fs) + 1px);font-weight:700}
+.sec-title{font-size:calc(var(--fs) - 1px)}
+.li-txt{font-size:var(--fs)}
+.li-sub{font-size:calc(var(--fs) - 2px)}
+.btn{font-size:calc(var(--fs) - 1px)}
+.sc-name{font-size:var(--fs)}
+.sc-time{font-size:calc(var(--fs) - 2px)}
+.iset-row-title{font-size:var(--fs)}
+.iset-row-sub{font-size:calc(var(--fs) - 2px)}
+.iset-section-label{font-size:calc(var(--fs) - 2px)}
+.ni-lb{font-size:calc(var(--fs) - 4px)}
+.ni-ic{font-size:calc(var(--fs) + 6px)}
+.tag{font-size:calc(var(--fs) - 3px)}
+.empty{font-size:calc(var(--fs) - 1px)}
+.tmr-title{font-size:calc(var(--fs) + 1px)}
 /* LOADING */
 #loading{position:fixed;inset:0;z-index:9999;background:var(--br);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
 #loading.hide{display:none}
@@ -444,7 +460,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
     </div>
   </div>
 </div>
-<div id="loading"><div class="ld-logo">いえ<em>ダッシュ</em></div><div class="ld-spin"></div><div class="ld-txt" id="ld-txt">読み込み中...</div></div>
+<div id="loading"><div class="ld-logo">I<em>rori</em></div><div class="ld-spin"></div><div class="ld-txt" id="ld-txt">読み込み中...</div></div>
 <div id="maintenance-screen" class="hide">
   <div class="maint-icon">🔧</div>
   <div class="maint-title">メンテナンス中</div>
@@ -453,7 +469,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 </div>
 <div id="room-screen" class="hide">
   <div class="rs-wrap">
-    <div class="rs-logo">いえ<em>ダッシュ</em></div>
+    <div class="rs-logo">I<em>rori</em></div>
     <div id="rs-myrooms-wrap" class="rs-myrooms" style="display:none">
       <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.1em;margin-bottom:8px">最近使ったルーム</div>
       <div id="rs-myrooms"></div>
@@ -479,7 +495,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 <div id="login-screen" class="hide">
   <div class="lc">
     <div class="lc-icon">🏠</div>
-    <div class="lc-title">いえダッシュ</div>
+    <div class="lc-title">Irori</div>
     <div class="lc-sub">家族みんなの予定・タスク・<br>ゴミ出しを一画面で管理</div>
     <button class="g-btn" onclick="signInGoogle()">
       <svg class="g-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
@@ -501,7 +517,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 </div>
 <div class="hdr">
   <div class="hdr-top">
-    <div class="logo">いえ<em>ダッシュ</em></div>
+    <div class="logo">I<em>rori</em></div>
     <div class="hdr-r">
       <span class="sync-dot" id="syncDot"></span>
       <div class="hdr-date" id="hdrDate"></div>
@@ -512,7 +528,10 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 </div>
 <div class="scroll">
 <div class="pg active" id="pg-home">
-  <div style="display:flex;justify-content:flex-end;margin-bottom:6px"><button onclick="sendEmergency()" style="background:rgba(201,64,64,.12);color:var(--rd);border:1.5px solid rgba(201,64,64,.3);border-radius:10px;padding:6px 14px;font-family:'Zen Maru Gothic',sans-serif;font-size:12px;font-weight:700;cursor:pointer">🚨 緊急連絡</button></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div id="home-summary" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    <button onclick="sendEmergency()" style="background:rgba(201,64,64,.12);color:var(--rd);border:1.5px solid rgba(201,64,64,.3);border-radius:10px;padding:5px 12px;font-family:'Zen Maru Gothic',sans-serif;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0">🚨 緊急</button>
+  </div>
   <div id="trashNotice"></div>
   <div class="sec">
     <div class="sec-row"><div class="sec-title">🏠 いまだれがいる？</div><button class="btn btn-ghost" style="font-size:10px" onclick="setPage('status',document.getElementById('ni-status'))">全員の状況→</button></div>
@@ -573,10 +592,10 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 </div>
 <div class="pg" id="pg-calendar">
   <div class="cal-view-tog">
-    <button class="cvt active" id="cvt-month" onclick="setCalMode('month')">📅 月</button>
-    <button class="cvt" id="cvt-week" onclick="setCalMode('week')">📆 週</button>
-    <button class="cvt" id="cvt-day" onclick="setCalMode('day')">📋 日</button>
-    <button class="cvt" id="cvt-gcal" onclick="setCalMode('gcal')">🔗 外部</button>
+    <button class="cvt active" id="cvt-month" onclick="setCalMode('month')">月</button>
+    <button class="cvt" id="cvt-week" onclick="setCalMode('week')">週</button>
+    <button class="cvt" id="cvt-day" onclick="setCalMode('day')">日</button>
+    <button class="cvt" id="cvt-gcal" onclick="setCalMode('gcal')">外部連携</button>
   </div>
   <div class="cal-nav">
     <button class="cnav-btn" id="cal-prev" onclick="calDelta(-1)">◀</button>
@@ -724,7 +743,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
     <div class="iset-group">
       <div class="iset-row" style="border:none;cursor:default">
         <span class="iset-icon" style="background:#8A8A8A">ℹ️</span>
-        <div class="iset-row-body"><div class="iset-row-title">バージョン</div><div class="iset-row-sub">いえダッシュ v1.0.0</div></div>
+        <div class="iset-row-body"><div class="iset-row-title">バージョン</div><div class="iset-row-sub">Irori v1.0.0</div></div>
       </div>
     </div>
   </div>
@@ -758,7 +777,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
   <!-- Logout -->
   <div style="padding:0 16px 30px">
     <button onclick="doSignOut()" style="width:100%;padding:15px;background:var(--cd);border:none;border-radius:14px;font-family:'Zen Maru Gothic',sans-serif;font-size:15px;font-weight:700;color:var(--rd);cursor:pointer;box-shadow:var(--sh)">ログアウト</button>
-    <div style="text-align:center;font-size:10px;color:var(--t3);margin-top:12px">いえダッシュ v1.0 · 開発：一色翔</div>
+    <div style="text-align:center;font-size:10px;color:var(--t3);margin-top:12px">Irori v1.0 · 開発：一色翔</div>
   </div>
 </div>
 </div>
@@ -1064,7 +1083,7 @@ function boot(){
   calDay=new Date(now);lastDate=tday();
   updateDD();
   setInterval(()=>{const t=tday();if(t!==lastDate){lastDate=t;updateDD();renderTrash();}},60000);
-  listenAll();renderTrash();schedChecks();renderNotifToggles();renderMeal();renderBath();
+  syncMealTpl().then(()=>renderMeal());listenAll();renderTrash();schedChecks();renderNotifToggles();renderBath();renderHomeSummary();
   // Unregister all old service workers to prevent caching issues
   if('serviceWorker'in navigator){
     navigator.serviceWorker.getRegistrations().then(regs=>{
@@ -1082,6 +1101,22 @@ function loadFbCount(){
   }).catch(()=>{});
 }
 function updateDD(){const now=new Date();const el=document.getElementById('hdrDate');if(el)el.textContent=(now.getMonth()+1)+'/'+(now.getDate())+'（'+DN[now.getDay()]+'）';}
+function renderHomeSummary(){
+  const el=document.getElementById('home-summary');if(!el)return;
+  const today=tday();
+  const bath=JSON.parse(localStorage.getItem('iedash_bath_'+ROOM)||'{}')[today]||{};
+  const shopTotal=state.shopping.filter(s=>!s.done).length;
+  const taskTotal=state.tasks.filter(s=>!s.done).length;
+  const todaySch=state.schedules.filter(s=>s.date===today).length;
+  const items=[];
+  if(todaySch>0)items.push({emoji:'📅',label:todaySch+'件の予定',color:'#6480B8'});
+  if(shopTotal>0)items.push({emoji:'🛒',label:shopTotal+'品',color:'#5A9E7C'});
+  if(taskTotal>0)items.push({emoji:'✅',label:taskTotal+'件',color:'#E8A040'});
+  const bathOk=bath.washed&&bath.filled;
+  const bathWash=bath.washed&&!bath.filled;
+  if(!bathOk)items.push({emoji:'🛁',label:bathWash?'洗い済':'未',color:bathWash?'#6480B8':'#C94040'});
+  el.innerHTML=items.map(it=>'<div style="display:flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;background:'+it.color+'15;border:1px solid '+it.color+'30;font-size:11px;font-weight:700;color:'+it.color+'">'+it.emoji+' '+it.label+'</div>').join('');
+}
 function renderBath(){
   const el=document.getElementById('bathStatus');if(!el)return;
   const data=JSON.parse(localStorage.getItem('iedash_bath_'+ROOM)||'{}');
@@ -1124,7 +1159,7 @@ function listenAll(){
   db.collection('iedash').doc(ROOM).collection('members').onSnapshot(s=>{members=s.docs.map(d=>d.data());renderTabs();renderSG();renderSUPage();},console.error);
   db.collection('iedash').doc(ROOM).collection('status').onSnapshot(s=>{state.status={};state.mood={};s.docs.forEach(d=>{const v=d.data();state.status[d.id]={home:v.home??false,ret:v.ret||''};if(v.mood)state.mood[d.id]=v.mood;});renderSG();renderSUPage();},console.error);
   db.collection('iedash').doc(ROOM).collection('schedules').onSnapshot(s=>{state.schedules=s.docs.map(d=>({id:d.id,...d.data()}));renderSch();if(document.getElementById('pg-calendar').classList.contains('active'))renderCal();},console.error);
-  db.collection('iedash').doc(ROOM).collection('shopping').onSnapshot(s=>{state.shopping=s.docs.map(d=>({id:d.id,...d.data()}));renderShop();},console.error);
+  db.collection('iedash').doc(ROOM).collection('shopping').onSnapshot(s=>{state.shopping=s.docs.map(d=>({id:d.id,...d.data()}));renderShop();renderHomeSummary();},console.error);
   db.collection('iedash').doc(ROOM).collection('tasks').onSnapshot(s=>{state.tasks=s.docs.map(d=>({id:d.id,...d.data()}));renderTasks();},console.error);
   db.collection('iedash').doc(ROOM).collection('tomorrow').onSnapshot(s=>{state.tomorrow=s.docs.map(d=>({id:d.id,...d.data()}));renderTmr();},console.error);
   db.collection('iedash').doc(ROOM).collection('medicine').onSnapshot(s=>{state.medicine=s.docs.map(d=>({id:d.id,...d.data()}));renderMed();},console.error);
@@ -1137,6 +1172,16 @@ function renderTabs(){
   const t=document.getElementById('schTitle');if(t)t.textContent=gm(curM).name+'のスケジュール';
 }
 function switchM(u){curM=u;renderTabs();renderSch();}
+function quickToggleStatus(){
+  const me=state.status[currentUser.uid]||{home:false};
+  const newHome=!me.home;
+  db.collection('iedash').doc(ROOM).collection('status').doc(currentUser.uid).set(
+    {home:newHome,ret:me.ret||'',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}
+  );
+  const label=newHome?'🏠 在宅':'🚶 外出中';
+  showToast(label+'に更新しました');
+  addAct(newHome?'🏠 帰宅しました':'🚶 外出しました');
+}
 function renderSG(){
   const el=document.getElementById('sg');if(!el)return;
   el.innerHTML=members.map(m=>{
@@ -1237,7 +1282,11 @@ function renderShop(){
   const sorted=[...state.shopping].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;const p={'急ぎ':0,'普通':1,'なくなったら':2};return(p[a.priority]||1)-(p[b.priority]||1);});
   el.innerHTML=sorted.map(item=>{const mine=canEdit(item.ownerUid);return'<div class="li"><div class="chk '+(item.done?'done':'')+'" onclick="togShop(\''+item.id+'\','+!item.done+')"></div><div class="li-txt '+(item.done?'done':'')+'" onclick="openModal(\'shopDet\',{id:\''+item.id+'\'})">'+item.text+'</div>'+(item.priority==='急ぎ'?'<span class="tag tag-urg">🔴 急ぎ</span>':'')+(mine?'<button class="del" onclick="delShop(\''+item.id+'\')">✕</button>':'')+' </div>';}).join('');
 }
-function togShop(id,done){db.collection('iedash').doc(ROOM).collection('shopping').doc(id).update({done}).catch(console.error);}
+function togShop(id,done){
+  const ref=db.collection('iedash').doc(ROOM).collection('shopping').doc(id);
+  ref.update({done:done}).catch(console.error);
+  renderHomeSummary();
+}
 function delShop(id){db.collection('iedash').doc(ROOM).collection('shopping').doc(id).delete().catch(console.error);}
 function clearDoneShop(){state.shopping.filter(x=>x.done&&canEdit(x.ownerUid)).forEach(x=>delShop(x.id));}
 function renderTasks(){
@@ -1504,6 +1553,19 @@ const MEAL_SLOTS=[
   {key:'dinner',label:'🌙 夜',placeholder:'鍋、炒め物...'},
 ];
 const DN7=['日','月','火','水','木','金','土'];
+// Meal sync: templates stored in Firestore, today overrides in localStorage
+async function syncMealTpl(){
+  if(!ROOM||!db)return;
+  const doc=await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').get();
+  if(doc.exists){
+    localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(doc.data().tpl||{}));
+  }
+}
+async function saveMealTplToFirestore(tpl){
+  if(!ROOM||!db)return;
+  await db.collection('iedash').doc(ROOM).collection('settings').doc('meal_tpl').set({tpl,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  localStorage.setItem('iedash_meal_tpl_'+ROOM, JSON.stringify(tpl));
+}
 function getMealForToday(){
   // Today override → weekday template → empty
   const today=tday();

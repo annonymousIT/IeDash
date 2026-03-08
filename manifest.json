@@ -1,26 +1,14 @@
 {
-  "name": "いえダッシュ",
-  "short_name": "いえダッシュ",
-  "description": "家族みんなの予定・タスク・ゴミ出しを一画面で管理",
-  "start_url": "./index.html",
+  "name": "Irori",
+  "short_name": "Irori",
+  "description": "家族をつなぐホームダッシュボード",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#FAF7F2",
+  "background_color": "#4E3425",
   "theme_color": "#4E3425",
   "orientation": "portrait",
   "icons": [
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%234E3425'/><text y='130' x='96' text-anchor='middle' font-size='110'>🏠</text></svg>",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%234E3425'/><text y='360' x='256' text-anchor='middle' font-size='300'>🏠</text></svg>",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ],
-  "categories": ["lifestyle", "utilities"],
-  "lang": "ja"
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
 }
