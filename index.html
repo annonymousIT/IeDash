@@ -78,7 +78,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 #loading{position:fixed;inset:0;z-index:9999;background:var(--br);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
 #loading.hide{display:none}
 .ld-logo{font-size:26px;font-weight:700;color:#fff}.ld-logo em{color:var(--yl);font-style:normal}
-.ld-spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--yl);border-radius:50%;animation:spin .8s linear infinite}
+.ld-spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--yl);border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld-txt{font-size:12px;color:rgba(255,255,255,.5)}
 /* LOGIN */
@@ -88,7 +88,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .lc-icon{font-size:52px;margin-bottom:10px}
 .lc-title{font-size:22px;font-weight:700;margin-bottom:6px}
 .lc-sub{font-size:13px;color:var(--t2);margin-bottom:24px;line-height:1.8}
-.g-btn{width:100%;padding:15px;background:#fff;color:var(--tx);border:2px solid var(--wm);border-radius:14px;font-family:'Zen Maru Gothic',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .15s;margin-bottom:10px}
+.g-btn{width:100%;padding:15px;background:#fff;color:var(--tx);border:2px solid var(--wm);border-radius:14px;font-family:'Zen Maru Gothic',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .1s;margin-bottom:10px}
 .g-btn:hover{background:var(--wm)}.g-btn:active{transform:scale(.97)}
 .g-icon{width:22px;height:22px;flex-shrink:0}
 /* PROFILE */
@@ -97,7 +97,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .pc{background:#fff;border-radius:22px;padding:22px;width:100%;max-width:360px}
 .pc-title{font-size:17px;font-weight:700;margin-bottom:4px}
 .pc-sub{font-size:11px;color:var(--t2);margin-bottom:14px;line-height:1.6}
-.pc-eg{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:14px}
+.pc-eg{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-bottom:14px}
 .pc-e{font-size:24px;text-align:center;padding:7px;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all .13s}
 .pc-e.sel{background:var(--wm);border-color:var(--ac);transform:scale(1.1)}
 .pc-inp{width:100%;padding:12px;border:2px solid var(--wm);border-radius:11px;font-family:'Zen Maru Gothic',sans-serif;font-size:15px;outline:none;transition:border-color .15s;margin-bottom:12px}
@@ -115,7 +115,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .ibtn:active{background:rgba(255,255,255,.25)}
 .mtabs{display:flex;gap:5px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none}
 .mtabs::-webkit-scrollbar{display:none}
-.mtab{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;border:2px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.5);font-family:'Zen Maru Gothic',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.mtab{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;border:2px solid rgba(255,255,255,.18);background:transparent;color:rgba(255,255,255,.5);font-family:'Zen Maru Gothic',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .1s;flex-shrink:0}
 .mtab.active{background:#fff;color:var(--br);border-color:#fff;font-weight:700}
 .mtab.me.active{background:var(--yl);color:var(--br);border-color:var(--yl)}
 /* LAYOUT */
@@ -133,7 +133,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .btn-o{background:var(--ac);color:#fff}.btn-g{background:var(--gn);color:#fff}.btn-b{background:var(--bl);color:#fff}.btn-r{background:var(--rd);color:#fff}.btn-ghost{background:var(--wm);color:var(--t2)}.btn-dark{background:var(--br);color:#fff}
 .btn-full{width:100%;padding:13px;font-size:14px;border-radius:13px;margin-top:6px}
 /* EMERGENCY */
-.emg-btn{width:100%;padding:18px;background:linear-gradient(135deg,#C94040,#a02020);color:#fff;border:none;border-radius:16px;font-family:'Zen Maru Gothic',sans-serif;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(201,64,64,.4);transition:all .15s;margin-bottom:13px}
+.emg-btn{width:100%;padding:18px;background:linear-gradient(135deg,#C94040,#a02020);color:#fff;border:none;border-radius:16px;font-family:'Zen Maru Gothic',sans-serif;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(201,64,64,.4);transition:all .1s;margin-bottom:13px}
 .emg-btn:active{transform:scale(.96);box-shadow:0 2px 10px rgba(201,64,64,.3)}
 /* STATUS GRID */
 .sg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
@@ -194,7 +194,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .med-chk.done{background:#8E6BB5;border-color:#8E6BB5}.med-chk.done::after{content:"✓";color:#fff;font-size:13px;font-weight:700}
 /* CALENDAR */
 .cal-view-tog{display:flex;background:var(--wm);border-radius:12px;padding:3px;margin-bottom:10px;gap:2px}
-.cvt{flex:1;padding:7px 4px;border:none;background:transparent;border-radius:9px;font-family:'Zen Maru Gothic',sans-serif;font-size:11px;font-weight:700;cursor:pointer;color:var(--t2);transition:all .15s}
+.cvt{flex:1;padding:7px 4px;border:none;background:transparent;border-radius:9px;font-family:'Zen Maru Gothic',sans-serif;font-size:11px;font-weight:700;cursor:pointer;color:var(--t2);transition:all .1s}
 .cvt.active{background:#fff;color:var(--br);box-shadow:0 1px 5px rgba(0,0,0,.1)}
 .cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .cnav-btn{background:var(--wm);border:none;border-radius:10px;font-size:18px;cursor:pointer;padding:6px 12px;color:var(--br);transition:background .13s}.cnav-btn:active{background:#e0d8cc}
@@ -262,7 +262,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .fg{margin-bottom:11px}.fl{font-size:11px;color:var(--t2);margin-bottom:4px;display:block;font-weight:700;letter-spacing:.04em}
 .fi{width:100%;padding:11px 13px;border:2px solid var(--wm);border-radius:12px;font-family:'Zen Maru Gothic',sans-serif;font-size:var(--fs);outline:none;transition:border-color .14s;background:#fff;color:var(--tx)}.fi:focus{border-color:var(--ac)}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.eg{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.eg{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
 .eo{font-size:24px;text-align:center;padding:7px;border-radius:9px;cursor:pointer;border:2px solid transparent;transition:all .12s}.eo.sel,.eo:hover{background:var(--wm);border-color:var(--ac)}
 .dr{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--wm);font-size:13px}.dr:last-child{border-bottom:none}
 .dl{color:var(--t2);width:58px;flex-shrink:0;font-size:11px;padding-top:2px}.dv{flex:1}
@@ -385,7 +385,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 
 
 /* Status page new buttons */
-.su-btn2{padding:12px;border-radius:12px;border:2px solid var(--wm);background:var(--cd);font-family:'Zen Maru Gothic',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;color:var(--t2)}
+.su-btn2{padding:12px;border-radius:12px;border:2px solid var(--wm);background:var(--cd);font-family:'Zen Maru Gothic',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .1s;color:var(--t2)}
 .su-btn2.sel-home{background:rgba(90,158,124,.15);border-color:var(--gn);color:var(--gn)}
 .su-btn2.sel-out{background:rgba(201,64,64,.1);border-color:var(--rd);color:var(--rd)}
 .mood-btn2{font-size:24px;padding:6px;background:none;border:2px solid transparent;border-radius:10px;cursor:pointer;transition:all .13s}
@@ -412,7 +412,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .gcal-evt-pill{font-size:10px;font-weight:700;padding:1px 4px;border-radius:4px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.5}
 .gcal-more{font-size:10px;color:var(--t3);text-align:right;padding-right:2px}
 /* Bath checkboxes */
-.bath-chk{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:14px;border:2px solid var(--wm);background:var(--cd);font-family:'Zen Maru Gothic',sans-serif;font-size:13px;font-weight:700;color:var(--t2);cursor:pointer;transition:all .15s;width:100%}
+.bath-chk{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:14px;border:2px solid var(--wm);background:var(--cd);font-family:'Zen Maru Gothic',sans-serif;font-size:13px;font-weight:700;color:var(--t2);cursor:pointer;transition:all .1s;width:100%}
 .bath-chk-on.bath-blue{border-color:#6480B8;background:rgba(100,128,184,.1);color:#6480B8}
 .bath-chk-on.bath-green{border-color:#5A9E7C;background:rgba(90,158,124,.1);color:#5A9E7C}
 
@@ -420,12 +420,21 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
 .fs-btn2.active{background:var(--ac);color:#fff;border-color:var(--ac)}
 
 
+
+/* Collapsible cards */
+.card-hdr{cursor:pointer;user-select:none}
+.card-hdr .chev{transition:transform .2s;display:inline-block;color:var(--t3);font-size:14px;margin-left:4px}
+.card-body{transition:all .12s;overflow:hidden}
+.card-body.collapsed{display:none}
+
 /* FAB - Floating Action Button */
+#fab-backdrop{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);transition:all .25s;pointer-events:none}
+#fab-backdrop.show{background:rgba(0,0,0,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);pointer-events:all}
 #fab-wrap{position:fixed;bottom:80px;right:16px;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 #fab-main{width:56px;height:56px;border-radius:50%;background:var(--ac);border:none;font-size:26px;color:#fff;cursor:pointer;box-shadow:0 4px 20px rgba(212,102,62,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
 #fab-main:active{transform:scale(.93)}
 #fab-main.open{transform:rotate(45deg);background:#8A8A8A}
-.fab-items{display:flex;flex-direction:column;align-items:flex-end;gap:8px;transition:all .2s}
+.fab-items{display:flex;flex-direction:column;align-items:flex-end;gap:8px;transition:all .12s}
 .fab-items.hide{display:none}
 .fab-item{display:flex;align-items:center;gap:10px;animation:fabIn .15s ease both}
 @keyframes fabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -551,12 +560,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
     <div class="sec-row"><div class="sec-title">🏠 いまだれがいる？</div><button class="btn btn-ghost" style="font-size:10px" onclick="setPage('status',document.getElementById('ni-status'))">全員の状況→</button></div>
     <div class="sg" id="sg"></div>
   </div>
-  <div class="sec">
-    <div class="card">
-      <div class="card-hdr"><div class="card-title">📍 いまどこにいる？</div></div>
-      <div id="locList"><div class="empty">まだ誰も共有していません</div></div>
-    </div>
-  </div>
+
   <div class="sec">
     <div class="tmr">
       <div class="tmr-hdr"><div class="tmr-title">🌙 明日の予定</div><button class="btn" onclick="openModal('tomorrow')" style="background:rgba(255,255,255,.15);color:#fff;font-size:11px">＋ 入力</button></div>
@@ -565,26 +569,26 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
   </div>
   <div class="sec" id="meal-sec">
     <div class="card">
-      <div class="card-hdr"><div class="card-title">🍽️ 今日のごはん <span id="meal-badge"></span></div><button class="btn btn-ghost" style="font-size:10px" onclick="openModal('mealSettings')">設定</button></div>
-      <div id="mealDisplay"></div>
+      <div class="card-hdr" onclick="toggleCard('meal')" style="display:flex;align-items:center;justify-content:space-between"><div class="card-title">🍽️ 今日のごはん <span id="meal-badge"></span><span class="chev" id="chev-meal">›</span></div><button class="btn btn-ghost" style="font-size:10px" onclick="event.stopPropagation();openModal('mealSettings')">設定</button></div>
+      </div><div class="card-body" id="cbody-meal"><div id="mealDisplay"></div>
     </div>
   </div>
   <div class="sec">
     <div class="card">
-      <div class="card-hdr"><div class="card-title">🛒 買い物リスト</div><div style="display:flex;gap:5px"><button class="btn btn-ghost" style="font-size:10px" onclick="clearDoneShop()">完了削除</button><button class="btn btn-g" onclick="openModal('shop')">＋</button></div></div>
-      <div id="shopList"></div>
+      <div class="card-hdr" onclick="toggleCard('shop')" style="display:flex;align-items:center;justify-content:space-between"><div class="card-title">🛒 買い物リスト<span class="chev" id="chev-shop">›</span></div><div style="display:flex;gap:5px" onclick="event.stopPropagation()"><button class="btn btn-ghost" style="font-size:10px" onclick="clearDoneShop()">完了削除</button><button class="btn btn-g" onclick="openModal('shop')">＋</button></div></div>
+      </div><div class="card-body" id="cbody-shop"><div id="shopList"></div>
     </div>
   </div>
   <div class="sec">
     <div class="card">
-      <div class="card-hdr"><div class="card-title">✅ タスク</div><div style="display:flex;gap:5px"><button class="btn btn-ghost" style="font-size:10px" onclick="clearDoneTask()">完了削除</button><button class="btn btn-b" onclick="openModal('task')">＋</button></div></div>
-      <div id="taskList"></div>
+      <div class="card-hdr" onclick="toggleCard('task')" style="display:flex;align-items:center;justify-content:space-between"><div class="card-title">✅ タスク<span class="chev" id="chev-task">›</span></div><div style="display:flex;gap:5px" onclick="event.stopPropagation()"><button class="btn btn-ghost" style="font-size:10px" onclick="clearDoneTask()">完了削除</button><button class="btn btn-b" onclick="openModal('task')">＋</button></div></div>
+      </div><div class="card-body" id="cbody-task"><div id="taskList"></div>
     </div>
   </div>
   <div class="sec">
     <div class="card">
-      <div class="card-hdr"><div class="card-title">🛁 お風呂</div></div>
-      <div id="bathStatus"></div>
+      <div class="card-hdr" onclick="toggleCard('bath')" style="display:flex;align-items:center;justify-content:space-between"><div class="card-title">🛁 お風呂<span class="chev" id="chev-bath">›</span></div></div>
+      </div><div class="card-body" id="cbody-bath"><div id="bathStatus"></div>
     </div>
   </div>
   <div class="sec">
@@ -637,6 +641,12 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
   <div style="text-align:center;margin-top:10px" id="calAddBtn"><button class="btn btn-o" style="padding:11px 22px;font-size:14px" onclick="openModal('schedule')">＋ 予定を追加</button></div>
 </div>
 <div class="pg" id="pg-status">
+  <div class="sec">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">📍 いまどこにいる？</div>
+      <div id="locList"><div class="empty">まだ誰も共有していません</div></div>
+    </div>
+  </div>
   <div class="sec">
     <div class="card">
       <div id="myStatusCard"></div>
@@ -795,6 +805,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:var(--cr);color:var(--t
   </div>
 </div>
 </div>
+<div id="fab-backdrop" onclick="closeFab()"></div>
 <div id="fab-wrap">
   <div class="fab-items hide" id="fab-items">
     <div class="fab-item" style="animation-delay:.05s">
@@ -832,7 +843,7 @@ const FB_CFG={apiKey:"AIzaSyCsGjhymEzDf9XJyPvxvkbFbE7eURbo774",authDomain:"famil
 let ROOM='';  // set dynamically after room selection
 const ADMIN_EMAIL='b.sho.isshiki'+'@'+'gmail.com';
 let isAdmin=false,maintenanceMode=false,isRoomAdmin=false;
-const EMOJIS=['🧑','👩','👨','👧','👦','👵','👴','🧓','🐱','🐶','🐸','🦊','🐼','🌸','⭐','🎓','💼','🏃','🧘','🍀'];
+const EMOJIS=['🧑','👩','👨','👧','👦','👵','👴','🧓','👶','🧒','👱','👲','🐱','🐶','🐸','🦊','🐼','🐨','🐯','🦁','🌸','🌺','🌻','⭐','🌟','🎓','💼','🏃','🧘','🍀','🎮','🎵','📚','🍜','🎨','⚽','🎸','🌈','🦋','🐠'];
 const TAGC={'学校':'#6480B8','仕事':'#5A9E7C','プライベート':'#D4663E','家族':'#E8A040','病院':'#8E6BB5','その他':'#8A8A8A'};
 const MOODS=['😄','😊','😐','😔','😤','🤒'];
 const DN=['日','月','火','水','木','金','土'];
@@ -1122,7 +1133,7 @@ function boot(){
   calDay=new Date(now);lastDate=tday();
   updateDD();
   setInterval(()=>{const t=tday();if(t!==lastDate){lastDate=t;updateDD();renderTrash();}},60000);
-  syncMealTpl().then(()=>renderMeal());listenAll();renderTrash();schedChecks();renderNotifToggles();renderBath();renderHomeSummary();
+  syncMealTpl().then(()=>renderMeal());listenAll();renderTrash();initCollapse();schedChecks();renderNotifToggles();renderBath();renderHomeSummary();
   // Unregister all old service workers to prevent caching issues
   if('serviceWorker'in navigator){
     navigator.serviceWorker.getRegistrations().then(regs=>{
@@ -2382,26 +2393,37 @@ function setTrashArea(id,label){
   showToast('地域を更新しました');
 }
 
+
+const collapsedCards=JSON.parse(localStorage.getItem('irori_collapsed')||'{}');
+function toggleCard(id){
+  collapsedCards[id]=!collapsedCards[id];
+  localStorage.setItem('irori_collapsed',JSON.stringify(collapsedCards));
+  applyCollapse(id);
+}
+function applyCollapse(id){
+  const body=document.getElementById('cbody-'+id);
+  const chev=document.getElementById('chev-'+id);
+  if(!body)return;
+  const collapsed=collapsedCards[id];
+  body.classList.toggle('collapsed',!!collapsed);
+  if(chev)chev.style.transform=collapsed?'rotate(0deg)':'rotate(90deg)';
+}
+function initCollapse(){
+  ['meal','shop','task','bath','med','trash','sch'].forEach(id=>applyCollapse(id));
+}
+
 let fabOpen=false;
 function toggleFab(){
   fabOpen=!fabOpen;
   document.getElementById('fab-items').classList.toggle('hide',!fabOpen);
   document.getElementById('fab-main').classList.toggle('open',fabOpen);
-  // Add backdrop click to close
-  if(fabOpen){
-    setTimeout(()=>document.addEventListener('click',closeFabOutside),10);
-  }
-}
-function closeFabOutside(e){
-  if(!document.getElementById('fab-wrap').contains(e.target)){
-    closeFab();
-  }
+  document.getElementById('fab-backdrop').classList.toggle('show',fabOpen);
 }
 function closeFab(){
   fabOpen=false;
   document.getElementById('fab-items').classList.add('hide');
   document.getElementById('fab-main').classList.remove('open');
-  document.removeEventListener('click',closeFabOutside);
+  document.getElementById('fab-backdrop').classList.remove('show');
 }
 function fabAction(type){
   closeFab();
